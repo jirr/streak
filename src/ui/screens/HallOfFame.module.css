@@ -1,0 +1,84 @@
+.page {
+  padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 32px);
+}
+.section {
+  padding: 16px 16px 0;
+}
+.sectionTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 4px 10px;
+}
+.empty {
+  padding: 4px;
+  color: var(--ink-2);
+}
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--card);
+  border-radius: 16px;
+}
+.rank {
+  width: 22px;
+  flex: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.tile {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+}
+.rowText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 15px;
+}
+.rowText small {
+  color: var(--ink-2);
+  font-size: 12px;
+}
+.rowRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.length {
+  font-family: var(--font-display);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--border-soft);
+  color: var(--ink-2);
+}
+.pillActive {
+  background: var(--tint-green);
+  color: var(--success);
+}
