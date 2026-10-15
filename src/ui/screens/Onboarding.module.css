@@ -143,7 +143,3 @@
   text-decoration: none;
   padding: 10px 4px;
 }
-.error {
-  color: var(--accent);
-  font-size: 13px;
-}

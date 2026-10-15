@@ -50,8 +50,6 @@ export interface Profile {
   /** 1–30 après trim */
   pseudo: string
   gender?: Gender
-  /** facultatif : sert à s'envoyer ses sauvegardes par mail */
-  email?: string
   /** futur : 'apple' | 'google' | 'email' */
   authProvider: 'local'
   createdAt: string

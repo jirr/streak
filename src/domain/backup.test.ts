@@ -3,7 +3,7 @@ import { at, checks, makeSeries } from '../test/fixtures.ts'
 import { buildBackup, parseBackup, shouldNudgeBackup } from './backup.ts'
 import { DEFAULT_SETTINGS, type Profile } from './types.ts'
 
-const profile: Profile = { id: 'p1', pseudo: 'Baptiste', gender: 'male', email: 'b@example.com', authProvider: 'local', createdAt: '2026-01-01T00:00:00.000Z' }
+const profile: Profile = { id: 'p1', pseudo: 'Baptiste', gender: 'male', authProvider: 'local', createdAt: '2026-01-01T00:00:00.000Z' }
 const series = [makeSeries({ presetId: 'no-alcohol' }), makeSeries({ id: 's2', periodicity: 'weekly', target: 3, archivedAt: '2026-05-01T00:00:00.000Z' })]
 const backup = buildBackup(
   { profile, settings: { ...DEFAULT_SETTINGS, graceHour: 2, lastBackupAt: '2026-10-01T00:00:00.000Z' }, series, checkIns: checks('s1', ['2026-10-14', '2026-10-15']) },

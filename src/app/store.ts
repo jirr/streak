@@ -36,8 +36,8 @@ interface AppState {
   bannerDismissedDayKey: string | null
 
   init(): Promise<void>
-  completeOnboarding(pseudo: string, gender?: Gender, email?: string): Promise<void>
-  updateProfile(p: Partial<Pick<Profile, 'pseudo' | 'gender' | 'email'>>): Promise<void>
+  completeOnboarding(pseudo: string, gender?: Gender): Promise<void>
+  updateProfile(p: Partial<Pick<Profile, 'pseudo' | 'gender'>>): Promise<void>
   updateSettings(p: Partial<Settings>): Promise<void>
   createSeries(draft: SeriesDraft): Promise<Series>
   updateSeries(id: string, draft: SeriesDraft): Promise<void>
@@ -96,12 +96,11 @@ export const useAppStore = create<AppState>()((set, get) => {
 
     init: reload,
 
-    async completeOnboarding(pseudo, gender, email) {
+    async completeOnboarding(pseudo, gender) {
       const profile: Profile = {
         id: crypto.randomUUID(),
         pseudo: pseudo.trim().slice(0, 30),
         ...(gender ? { gender } : {}),
-        ...(email?.trim() ? { email: email.trim() } : {}),
         authProvider: 'local',
         createdAt: new Date().toISOString(),
       }
@@ -120,7 +119,6 @@ export const useAppStore = create<AppState>()((set, get) => {
       if (!current) return
       const profile = { ...current, ...p }
       if (profile.gender === undefined) delete profile.gender
-      if (!profile.email) delete profile.email
       await repos.profile.save(profile)
       set({ profile })
     },

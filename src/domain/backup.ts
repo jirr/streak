@@ -120,8 +120,6 @@ function parseProfile(raw: unknown): Profile | null {
     createdAt: str(raw, 'createdAt', 'profile'),
   }
   if (raw.gender !== undefined) profile.gender = oneOf<Gender>(raw, 'gender', GENDERS, 'profile')
-  const email = optStr(raw, 'email', 'profile')
-  if (email !== undefined) profile.email = email
   return profile
 }
 

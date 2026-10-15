@@ -2,7 +2,6 @@ import { ArrowRight, Flame } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useAppStore } from '../../app/store.ts'
-import { isValidEmail } from '../../domain/email.ts'
 import type { Gender } from '../../domain/types.ts'
 import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
 import { Banner } from '../components/Banner.tsx'
@@ -26,20 +25,18 @@ export function Onboarding() {
   const navigate = useNavigate()
   const [pseudo, setPseudo] = useState('')
   const [gender, setGender] = useState<Gender | undefined>()
-  const [email, setEmail] = useState('')
   const [busy, setBusy] = useState(false)
   const [installDismissed, setInstallDismissed] = useState(false)
   const { canInstall, promptInstall } = useInstallPrompt()
   const iosInstall = isIos() && !isStandalone()
   const showInstall = !installDismissed && (canInstall || iosInstall)
-  const emailOk = email.trim() === '' || isValidEmail(email.trim())
-  const valid = pseudo.trim().length >= 1 && pseudo.trim().length <= 30 && emailOk
+  const valid = pseudo.trim().length >= 1 && pseudo.trim().length <= 30
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     if (!valid || busy) return
     setBusy(true)
-    await completeOnboarding(pseudo, gender, email)
+    await completeOnboarding(pseudo, gender)
     navigate('/', { replace: true })
   }
 
@@ -92,20 +89,6 @@ export function Onboarding() {
           <Segmented label="Sexe" options={GENDERS} value={gender} onChange={setGender} allowDeselect />
         </div>
 
-        <label className={styles.field}>
-          <span className={styles.label}>E-mail (facultatif)</span>
-          <input
-            className={styles.input}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Pour t'envoyer tes sauvegardes"
-            autoComplete="email"
-            aria-invalid={!emailOk}
-          />
-          {!emailOk ? <span className={styles.error}>Cette adresse a l'air bancale.</span> : null}
-        </label>
-
         <Button type="submit" fullWidth disabled={!valid || busy}>
           Continuer
         </Button>
@@ -122,7 +105,7 @@ export function Onboarding() {
             Continuer avec Google <Soon />
           </button>
           <div className={styles.emailRow} aria-disabled="true">
-            <input className={styles.input} placeholder="Connexion par e-mail" disabled aria-label="Connexion par e-mail" />
+            <input className={styles.input} placeholder="Ton e-mail" disabled aria-label="E-mail" />
             <button type="button" className={styles.emailGo} aria-disabled="true" tabIndex={-1} aria-label="Continuer avec l'e-mail">
               <ArrowRight size={20} />
             </button>
