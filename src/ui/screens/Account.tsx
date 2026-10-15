@@ -1,7 +1,7 @@
 import { differenceInCalendarDays } from 'date-fns'
 import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { exportBackupFile } from '../../app/backupFile.ts'
+import { emailBackupFile, exportBackupFile } from '../../app/backupFile.ts'
 import { useAppStore } from '../../app/store.ts'
 import { useNow } from '../../app/useNow.ts'
 import { scheduler } from '../../notifications/index.ts'
@@ -9,6 +9,7 @@ import type { PermissionState } from '../../notifications/NotificationScheduler.
 import { syncReminders } from '../../notifications/syncReminders.ts'
 import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
 import { parseBackup } from '../../domain/backup.ts'
+import { isValidEmail } from '../../domain/email.ts'
 import type { BackupV1, Gender } from '../../domain/types.ts'
 import { Button } from '../components/Button.tsx'
 import { DoubleConfirm } from '../components/DoubleConfirm.tsx'
@@ -53,6 +54,9 @@ export function Account() {
   const resetAll = useAppStore((s) => s.resetAll)
 
   const [pseudo, setPseudo] = useState(profile?.pseudo ?? '')
+  const [email, setEmail] = useState(profile?.email ?? '')
+  const [emailError, setEmailError] = useState<string | null>(null)
+  const [exportNote, setExportNote] = useState<string | null>(null)
   const [importError, setImportError] = useState<string | null>(null)
   const [pendingImport, setPendingImport] = useState<BackupV1 | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
@@ -71,11 +75,27 @@ export function Account() {
     setPseudo(trimmed)
   }
 
-  const doExport = async () => {
+  const saveEmail = () => {
+    const trimmed = email.trim()
+    if (trimmed !== '' && !isValidEmail(trimmed)) {
+      setEmailError('Cette adresse a l\'air bancale.')
+      return
+    }
+    setEmailError(null)
+    setEmail(trimmed)
+    if (trimmed !== (profile?.email ?? '')) void updateProfile({ email: trimmed || undefined })
+  }
+
+  const doExport = async (byMail: boolean) => {
     setExportError(null)
+    setExportNote(null)
     const now = new Date()
     try {
-      const outcome = await exportBackupFile(await exportData(), now)
+      const backup = await exportData()
+      const outcome = byMail && profile?.email ? await emailBackupFile(backup, now, profile.email) : await exportBackupFile(backup, now)
+      if (outcome === 'downloaded' && byMail) {
+        setExportNote('Fichier téléchargé : joins-le au mail qui vient de s\'ouvrir.')
+      }
       if (outcome !== 'cancelled') await updateSettings({ lastBackupAt: now.toISOString() })
     } catch (e) {
       console.error(e)
@@ -108,6 +128,20 @@ export function Account() {
             onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
           />
         </label>
+        <label className={styles.field}>
+          <span className={styles.label}>E-mail (facultatif)</span>
+          <input
+            className={styles.input}
+            type="email"
+            value={email}
+            placeholder="Pour t'envoyer tes sauvegardes"
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={saveEmail}
+            onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+            aria-invalid={emailError !== null}
+          />
+          {emailError ? <span className={styles.error}>{emailError}</span> : null}
+        </label>
         <div className={styles.field}>
           <span className={styles.label}>Sexe</span>
           <Segmented
@@ -127,9 +161,15 @@ export function Account() {
           Tes données vivent uniquement sur cet appareil. Si l'adresse de l'app change ou si tu vides ton navigateur,
           elles disparaissent.
         </p>
-        <Button fullWidth onClick={() => void doExport()}>
+        <Button fullWidth onClick={() => void doExport(false)}>
           Exporter mes données
         </Button>
+        {profile?.email ? (
+          <Button variant="secondary" fullWidth onClick={() => void doExport(true)}>
+            M'envoyer par mail
+          </Button>
+        ) : null}
+        {exportNote ? <p className={styles.muted}>{exportNote}</p> : null}
         {exportError ? (
           <p className={styles.error} role="alert">
             {exportError}
