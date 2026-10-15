@@ -1,0 +1,59 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 32px);
+}
+.page > section {
+  margin: 0 16px;
+}
+.card {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.highlight {
+  border: 2px solid var(--accent);
+}
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.label {
+  font-size: 14px;
+  font-weight: 700;
+}
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-field);
+  background: var(--card);
+  font-size: 16px;
+}
+.input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.strong {
+  font-weight: 700;
+}
+.muted {
+  color: var(--ink-2);
+  font-size: 14px;
+}
+.error {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+}

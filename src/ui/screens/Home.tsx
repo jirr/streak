@@ -1,12 +1,14 @@
 import { LayoutGrid, List } from 'lucide-react'
 import { useCallback, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useAppStore } from '../../app/store.ts'
 import { useSeriesStats } from '../../app/useSeriesStats.ts'
+import { shouldNudgeBackup } from '../../domain/backup.ts'
 import { canUndo, nextCheckTarget, type CheckTarget } from '../../domain/checkins.ts'
 import { confirmSubtitle, progressLabel, unitLabel } from '../../domain/labels.ts'
 import type { Series } from '../../domain/types.ts'
 import { AdSlot } from '../components/AdSlot.tsx'
+import { Banner } from '../components/Banner.tsx'
 import { Button } from '../components/Button.tsx'
 import { Celebration } from '../components/Celebration.tsx'
 import { DoubleConfirm } from '../components/DoubleConfirm.tsx'
@@ -40,6 +42,7 @@ export function Home() {
   const [celebration, setCelebration] = useState<CelebrationState | null>(null)
   const [pulseId, setPulseId] = useState<string | null>(null)
 
+  const showBackupNudge = shouldNudgeBackup(checkIns.length, settings, now)
   const view = settings.viewMode
   const active = series.filter((s) => !s.archivedAt)
   const closeCelebration = useCallback(() => setCelebration(null), [])
@@ -102,6 +105,21 @@ export function Home() {
           </div>
         ) : null}
       </header>
+
+      {showBackupNudge ? (
+        <div className={styles.nudge}>
+          <Banner
+            action={
+              <Link to="/account" className={styles.bannerLink}>
+                Sauvegarder
+              </Link>
+            }
+            onDismiss={() => void updateSettings({ backupNudgeDismissedAt: now.toISOString() })}
+          >
+            Pense à sauvegarder tes données.
+          </Banner>
+        </div>
+      ) : null}
 
       {active.length === 0 ? <p className={styles.empty}>Lance ta première série.</p> : null}
 

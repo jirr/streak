@@ -172,3 +172,21 @@ export function parseBackup(text: string): ParseBackupResult {
     throw e
   }
 }
+
+export const BACKUP_NUDGE_MIN_CHECKINS = 7
+export const BACKUP_NUDGE_DAYS = 14
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000
+
+function olderThanDays(iso: string | undefined, days: number, now: Date): boolean {
+  return iso === undefined || now.getTime() - new Date(iso).getTime() > days * MS_PER_DAY
+}
+
+/** Rappel de sauvegarde sur l'accueil : assez de données, pas de sauvegarde récente, pas déjà écarté. */
+export function shouldNudgeBackup(checkInCount: number, settings: Settings, now: Date): boolean {
+  return (
+    checkInCount >= BACKUP_NUDGE_MIN_CHECKINS &&
+    olderThanDays(settings.lastBackupAt, BACKUP_NUDGE_DAYS, now) &&
+    olderThanDays(settings.backupNudgeDismissedAt, BACKUP_NUDGE_DAYS, now)
+  )
+}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { createHashRouter, Navigate, Outlet, useLocation } from 'react-router'
 import { BottomNav } from '../ui/components/BottomNav.tsx'
+import { Account } from '../ui/screens/Account.tsx'
 import { HallOfFame } from '../ui/screens/HallOfFame.tsx'
 import { Home } from '../ui/screens/Home.tsx'
 import { Onboarding } from '../ui/screens/Onboarding.tsx'
@@ -41,6 +42,7 @@ export const router = createHashRouter([
         children: [
           { path: '/', element: <Home /> },
           { path: '/hall-of-fame', element: <HallOfFame /> },
+          { path: '/account', element: <Account /> },
         ],
       },
       { path: '/series/new', element: <SeriesForm /> },

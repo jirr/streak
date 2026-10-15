@@ -56,3 +56,12 @@
   flex-direction: column;
   gap: 10px;
 }
+.nudge {
+  margin-bottom: 12px;
+}
+.bannerLink {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 4px;
+}

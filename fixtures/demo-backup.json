@@ -1,0 +1,2134 @@
+{
+  "app": "series",
+  "schemaVersion": 1,
+  "exportedAt": "2026-10-15T18:28:35.886Z",
+  "profile": {
+    "id": "demo-profile",
+    "pseudo": "Baptiste",
+    "authProvider": "local",
+    "createdAt": "2025-09-10T10:00:00.000Z"
+  },
+  "settings": {
+    "graceHour": 4,
+    "remindersEnabled": true,
+    "notificationsPrompted": true,
+    "viewMode": "grid",
+    "installNudgeDismissed": false,
+    "lastBackupAt": "2026-10-15T18:28:35.886Z"
+  },
+  "series": [
+    {
+      "id": "demo-alcool",
+      "title": "Jours sans alcool",
+      "icon": "🍸",
+      "color": "orange",
+      "kind": "abstinence",
+      "periodicity": "daily",
+      "presetId": "no-alcohol",
+      "reminder": {
+        "enabled": true,
+        "time": "21:00"
+      },
+      "createdAt": "2025-09-10T10:00:00.000Z",
+      "updatedAt": "2025-09-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde",
+      "title": "Sans marcher dans la merde",
+      "icon": "🌿",
+      "color": "green",
+      "kind": "abstinence",
+      "periodicity": "daily",
+      "reminder": {
+        "enabled": true,
+        "time": "21:00"
+      },
+      "createdAt": "2025-09-11T10:00:00.000Z",
+      "updatedAt": "2025-09-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport",
+      "title": "Sport 3×/semaine",
+      "icon": "💪",
+      "color": "blue",
+      "kind": "habit",
+      "periodicity": "weekly",
+      "target": 3,
+      "presetId": "sport-3-week",
+      "reminder": {
+        "enabled": true,
+        "time": "21:00"
+      },
+      "createdAt": "2025-09-12T10:00:00.000Z",
+      "updatedAt": "2025-09-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire",
+      "title": "Lire 20 pages par jour",
+      "icon": "📚",
+      "color": "purple",
+      "kind": "habit",
+      "periodicity": "daily",
+      "presetId": "read-20-pages",
+      "reminder": {
+        "enabled": true,
+        "time": "21:00"
+      },
+      "createdAt": "2025-09-13T10:00:00.000Z",
+      "updatedAt": "2025-09-10T10:00:00.000Z"
+    }
+  ],
+  "checkIns": [
+    {
+      "id": "demo-alcool|2026-10-07",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-07",
+      "periodKey": "2026-10-07",
+      "confirmedAt": "2026-10-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-08",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-08",
+      "periodKey": "2026-10-08",
+      "confirmedAt": "2026-10-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-09",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-09",
+      "periodKey": "2026-10-09",
+      "confirmedAt": "2026-10-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-10",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-10",
+      "periodKey": "2026-10-10",
+      "confirmedAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-11",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-11",
+      "periodKey": "2026-10-11",
+      "confirmedAt": "2026-10-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-12",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-12",
+      "periodKey": "2026-10-12",
+      "confirmedAt": "2026-10-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-13",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-13",
+      "periodKey": "2026-10-13",
+      "confirmedAt": "2026-10-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-14",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-14",
+      "periodKey": "2026-10-14",
+      "confirmedAt": "2026-10-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-03",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-03",
+      "periodKey": "2026-10-03",
+      "confirmedAt": "2026-10-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-02",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-02",
+      "periodKey": "2026-10-02",
+      "confirmedAt": "2026-10-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-10-01",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-10-01",
+      "periodKey": "2026-10-01",
+      "confirmedAt": "2026-10-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-30",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-30",
+      "periodKey": "2026-09-30",
+      "confirmedAt": "2026-09-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-29",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-29",
+      "periodKey": "2026-09-29",
+      "confirmedAt": "2026-09-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-28",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-28",
+      "periodKey": "2026-09-28",
+      "confirmedAt": "2026-09-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-27",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-27",
+      "periodKey": "2026-09-27",
+      "confirmedAt": "2026-09-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-26",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-26",
+      "periodKey": "2026-09-26",
+      "confirmedAt": "2026-09-26T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-25",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-25",
+      "periodKey": "2026-09-25",
+      "confirmedAt": "2026-09-25T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-24",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-24",
+      "periodKey": "2026-09-24",
+      "confirmedAt": "2026-09-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-23",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-23",
+      "periodKey": "2026-09-23",
+      "confirmedAt": "2026-09-23T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-22",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-22",
+      "periodKey": "2026-09-22",
+      "confirmedAt": "2026-09-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-21",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-21",
+      "periodKey": "2026-09-21",
+      "confirmedAt": "2026-09-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-20",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-20",
+      "periodKey": "2026-09-20",
+      "confirmedAt": "2026-09-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-19",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-19",
+      "periodKey": "2026-09-19",
+      "confirmedAt": "2026-09-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-18",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-18",
+      "periodKey": "2026-09-18",
+      "confirmedAt": "2026-09-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-17",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-17",
+      "periodKey": "2026-09-17",
+      "confirmedAt": "2026-09-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-16",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-16",
+      "periodKey": "2026-09-16",
+      "confirmedAt": "2026-09-16T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-15",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-15",
+      "periodKey": "2026-09-15",
+      "confirmedAt": "2026-09-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-14",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-14",
+      "periodKey": "2026-09-14",
+      "confirmedAt": "2026-09-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-13",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-13",
+      "periodKey": "2026-09-13",
+      "confirmedAt": "2026-09-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-12",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-12",
+      "periodKey": "2026-09-12",
+      "confirmedAt": "2026-09-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-11",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-11",
+      "periodKey": "2026-09-11",
+      "confirmedAt": "2026-09-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-10",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-10",
+      "periodKey": "2026-09-10",
+      "confirmedAt": "2026-09-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-09",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-09",
+      "periodKey": "2026-09-09",
+      "confirmedAt": "2026-09-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-08",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-08",
+      "periodKey": "2026-09-08",
+      "confirmedAt": "2026-09-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-07",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-07",
+      "periodKey": "2026-09-07",
+      "confirmedAt": "2026-09-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-06",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-06",
+      "periodKey": "2026-09-06",
+      "confirmedAt": "2026-09-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-05",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-05",
+      "periodKey": "2026-09-05",
+      "confirmedAt": "2026-09-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-04",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-04",
+      "periodKey": "2026-09-04",
+      "confirmedAt": "2026-09-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-03",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-03",
+      "periodKey": "2026-09-03",
+      "confirmedAt": "2026-09-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-02",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-02",
+      "periodKey": "2026-09-02",
+      "confirmedAt": "2026-09-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-alcool|2026-09-01",
+      "seriesId": "demo-alcool",
+      "dayKey": "2026-09-01",
+      "periodKey": "2026-09-01",
+      "confirmedAt": "2026-09-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-28",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-28",
+      "periodKey": "2026-09-28",
+      "confirmedAt": "2026-09-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-29",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-29",
+      "periodKey": "2026-09-29",
+      "confirmedAt": "2026-09-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-30",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-30",
+      "periodKey": "2026-09-30",
+      "confirmedAt": "2026-09-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-01",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-01",
+      "periodKey": "2026-10-01",
+      "confirmedAt": "2026-10-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-02",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-02",
+      "periodKey": "2026-10-02",
+      "confirmedAt": "2026-10-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-03",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-03",
+      "periodKey": "2026-10-03",
+      "confirmedAt": "2026-10-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-04",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-04",
+      "periodKey": "2026-10-04",
+      "confirmedAt": "2026-10-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-05",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-05",
+      "periodKey": "2026-10-05",
+      "confirmedAt": "2026-10-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-06",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-06",
+      "periodKey": "2026-10-06",
+      "confirmedAt": "2026-10-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-07",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-07",
+      "periodKey": "2026-10-07",
+      "confirmedAt": "2026-10-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-08",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-08",
+      "periodKey": "2026-10-08",
+      "confirmedAt": "2026-10-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-09",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-09",
+      "periodKey": "2026-10-09",
+      "confirmedAt": "2026-10-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-10",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-10",
+      "periodKey": "2026-10-10",
+      "confirmedAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-11",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-11",
+      "periodKey": "2026-10-11",
+      "confirmedAt": "2026-10-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-12",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-12",
+      "periodKey": "2026-10-12",
+      "confirmedAt": "2026-10-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-13",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-13",
+      "periodKey": "2026-10-13",
+      "confirmedAt": "2026-10-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-10-14",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-10-14",
+      "periodKey": "2026-10-14",
+      "confirmedAt": "2026-10-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-24",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-24",
+      "periodKey": "2026-09-24",
+      "confirmedAt": "2026-09-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-23",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-23",
+      "periodKey": "2026-09-23",
+      "confirmedAt": "2026-09-23T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-22",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-22",
+      "periodKey": "2026-09-22",
+      "confirmedAt": "2026-09-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-21",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-21",
+      "periodKey": "2026-09-21",
+      "confirmedAt": "2026-09-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-20",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-20",
+      "periodKey": "2026-09-20",
+      "confirmedAt": "2026-09-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-19",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-19",
+      "periodKey": "2026-09-19",
+      "confirmedAt": "2026-09-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-18",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-18",
+      "periodKey": "2026-09-18",
+      "confirmedAt": "2026-09-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-17",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-17",
+      "periodKey": "2026-09-17",
+      "confirmedAt": "2026-09-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-16",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-16",
+      "periodKey": "2026-09-16",
+      "confirmedAt": "2026-09-16T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-15",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-15",
+      "periodKey": "2026-09-15",
+      "confirmedAt": "2026-09-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-14",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-14",
+      "periodKey": "2026-09-14",
+      "confirmedAt": "2026-09-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-13",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-13",
+      "periodKey": "2026-09-13",
+      "confirmedAt": "2026-09-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-12",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-12",
+      "periodKey": "2026-09-12",
+      "confirmedAt": "2026-09-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-11",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-11",
+      "periodKey": "2026-09-11",
+      "confirmedAt": "2026-09-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-10",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-10",
+      "periodKey": "2026-09-10",
+      "confirmedAt": "2026-09-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-09",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-09",
+      "periodKey": "2026-09-09",
+      "confirmedAt": "2026-09-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-08",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-08",
+      "periodKey": "2026-09-08",
+      "confirmedAt": "2026-09-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-07",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-07",
+      "periodKey": "2026-09-07",
+      "confirmedAt": "2026-09-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-06",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-06",
+      "periodKey": "2026-09-06",
+      "confirmedAt": "2026-09-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-05",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-05",
+      "periodKey": "2026-09-05",
+      "confirmedAt": "2026-09-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-04",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-04",
+      "periodKey": "2026-09-04",
+      "confirmedAt": "2026-09-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-03",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-03",
+      "periodKey": "2026-09-03",
+      "confirmedAt": "2026-09-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-02",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-02",
+      "periodKey": "2026-09-02",
+      "confirmedAt": "2026-09-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-09-01",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-09-01",
+      "periodKey": "2026-09-01",
+      "confirmedAt": "2026-09-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-31",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-31",
+      "periodKey": "2026-08-31",
+      "confirmedAt": "2026-08-31T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-30",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-30",
+      "periodKey": "2026-08-30",
+      "confirmedAt": "2026-08-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-29",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-29",
+      "periodKey": "2026-08-29",
+      "confirmedAt": "2026-08-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-28",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-28",
+      "periodKey": "2026-08-28",
+      "confirmedAt": "2026-08-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-27",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-27",
+      "periodKey": "2026-08-27",
+      "confirmedAt": "2026-08-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-26",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-26",
+      "periodKey": "2026-08-26",
+      "confirmedAt": "2026-08-26T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-25",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-25",
+      "periodKey": "2026-08-25",
+      "confirmedAt": "2026-08-25T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-24",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-24",
+      "periodKey": "2026-08-24",
+      "confirmedAt": "2026-08-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-23",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-23",
+      "periodKey": "2026-08-23",
+      "confirmedAt": "2026-08-23T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-22",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-22",
+      "periodKey": "2026-08-22",
+      "confirmedAt": "2026-08-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-21",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-21",
+      "periodKey": "2026-08-21",
+      "confirmedAt": "2026-08-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-20",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-20",
+      "periodKey": "2026-08-20",
+      "confirmedAt": "2026-08-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-19",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-19",
+      "periodKey": "2026-08-19",
+      "confirmedAt": "2026-08-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-18",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-18",
+      "periodKey": "2026-08-18",
+      "confirmedAt": "2026-08-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-17",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-17",
+      "periodKey": "2026-08-17",
+      "confirmedAt": "2026-08-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-16",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-16",
+      "periodKey": "2026-08-16",
+      "confirmedAt": "2026-08-16T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-15",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-15",
+      "periodKey": "2026-08-15",
+      "confirmedAt": "2026-08-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-14",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-14",
+      "periodKey": "2026-08-14",
+      "confirmedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-13",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-13",
+      "periodKey": "2026-08-13",
+      "confirmedAt": "2026-08-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-12",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-12",
+      "periodKey": "2026-08-12",
+      "confirmedAt": "2026-08-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-11",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-11",
+      "periodKey": "2026-08-11",
+      "confirmedAt": "2026-08-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-10",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-10",
+      "periodKey": "2026-08-10",
+      "confirmedAt": "2026-08-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-09",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-09",
+      "periodKey": "2026-08-09",
+      "confirmedAt": "2026-08-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-08",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-08",
+      "periodKey": "2026-08-08",
+      "confirmedAt": "2026-08-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-07",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-07",
+      "periodKey": "2026-08-07",
+      "confirmedAt": "2026-08-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-06",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-06",
+      "periodKey": "2026-08-06",
+      "confirmedAt": "2026-08-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-05",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-05",
+      "periodKey": "2026-08-05",
+      "confirmedAt": "2026-08-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-04",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-04",
+      "periodKey": "2026-08-04",
+      "confirmedAt": "2026-08-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-03",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-03",
+      "periodKey": "2026-08-03",
+      "confirmedAt": "2026-08-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-02",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-02",
+      "periodKey": "2026-08-02",
+      "confirmedAt": "2026-08-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-08-01",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-08-01",
+      "periodKey": "2026-08-01",
+      "confirmedAt": "2026-08-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-31",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-31",
+      "periodKey": "2026-07-31",
+      "confirmedAt": "2026-07-31T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-30",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-30",
+      "periodKey": "2026-07-30",
+      "confirmedAt": "2026-07-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-29",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-29",
+      "periodKey": "2026-07-29",
+      "confirmedAt": "2026-07-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-28",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-28",
+      "periodKey": "2026-07-28",
+      "confirmedAt": "2026-07-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-27",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-27",
+      "periodKey": "2026-07-27",
+      "confirmedAt": "2026-07-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-26",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-26",
+      "periodKey": "2026-07-26",
+      "confirmedAt": "2026-07-26T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-25",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-25",
+      "periodKey": "2026-07-25",
+      "confirmedAt": "2026-07-25T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-24",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-24",
+      "periodKey": "2026-07-24",
+      "confirmedAt": "2026-07-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-23",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-23",
+      "periodKey": "2026-07-23",
+      "confirmedAt": "2026-07-23T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-22",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-22",
+      "periodKey": "2026-07-22",
+      "confirmedAt": "2026-07-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-21",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-21",
+      "periodKey": "2026-07-21",
+      "confirmedAt": "2026-07-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-20",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-20",
+      "periodKey": "2026-07-20",
+      "confirmedAt": "2026-07-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-19",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-19",
+      "periodKey": "2026-07-19",
+      "confirmedAt": "2026-07-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-18",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-18",
+      "periodKey": "2026-07-18",
+      "confirmedAt": "2026-07-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-17",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-17",
+      "periodKey": "2026-07-17",
+      "confirmedAt": "2026-07-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-16",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-16",
+      "periodKey": "2026-07-16",
+      "confirmedAt": "2026-07-16T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-15",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-15",
+      "periodKey": "2026-07-15",
+      "confirmedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-14",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-14",
+      "periodKey": "2026-07-14",
+      "confirmedAt": "2026-07-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-13",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-13",
+      "periodKey": "2026-07-13",
+      "confirmedAt": "2026-07-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-12",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-12",
+      "periodKey": "2026-07-12",
+      "confirmedAt": "2026-07-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-11",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-11",
+      "periodKey": "2026-07-11",
+      "confirmedAt": "2026-07-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-10",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-10",
+      "periodKey": "2026-07-10",
+      "confirmedAt": "2026-07-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-09",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-09",
+      "periodKey": "2026-07-09",
+      "confirmedAt": "2026-07-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-08",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-08",
+      "periodKey": "2026-07-08",
+      "confirmedAt": "2026-07-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-07",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-07",
+      "periodKey": "2026-07-07",
+      "confirmedAt": "2026-07-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-06",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-06",
+      "periodKey": "2026-07-06",
+      "confirmedAt": "2026-07-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-05",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-05",
+      "periodKey": "2026-07-05",
+      "confirmedAt": "2026-07-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-04",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-04",
+      "periodKey": "2026-07-04",
+      "confirmedAt": "2026-07-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-03",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-03",
+      "periodKey": "2026-07-03",
+      "confirmedAt": "2026-07-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-02",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-02",
+      "periodKey": "2026-07-02",
+      "confirmedAt": "2026-07-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-07-01",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-07-01",
+      "periodKey": "2026-07-01",
+      "confirmedAt": "2026-07-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-30",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-30",
+      "periodKey": "2026-06-30",
+      "confirmedAt": "2026-06-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-29",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-29",
+      "periodKey": "2026-06-29",
+      "confirmedAt": "2026-06-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-28",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-28",
+      "periodKey": "2026-06-28",
+      "confirmedAt": "2026-06-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-27",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-27",
+      "periodKey": "2026-06-27",
+      "confirmedAt": "2026-06-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-26",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-26",
+      "periodKey": "2026-06-26",
+      "confirmedAt": "2026-06-26T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-25",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-25",
+      "periodKey": "2026-06-25",
+      "confirmedAt": "2026-06-25T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-24",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-24",
+      "periodKey": "2026-06-24",
+      "confirmedAt": "2026-06-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-23",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-23",
+      "periodKey": "2026-06-23",
+      "confirmedAt": "2026-06-23T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-22",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-22",
+      "periodKey": "2026-06-22",
+      "confirmedAt": "2026-06-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-21",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-21",
+      "periodKey": "2026-06-21",
+      "confirmedAt": "2026-06-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-20",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-20",
+      "periodKey": "2026-06-20",
+      "confirmedAt": "2026-06-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-19",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-19",
+      "periodKey": "2026-06-19",
+      "confirmedAt": "2026-06-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-18",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-18",
+      "periodKey": "2026-06-18",
+      "confirmedAt": "2026-06-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-17",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-17",
+      "periodKey": "2026-06-17",
+      "confirmedAt": "2026-06-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-16",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-16",
+      "periodKey": "2026-06-16",
+      "confirmedAt": "2026-06-16T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-15",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-15",
+      "periodKey": "2026-06-15",
+      "confirmedAt": "2026-06-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-14",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-14",
+      "periodKey": "2026-06-14",
+      "confirmedAt": "2026-06-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-13",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-13",
+      "periodKey": "2026-06-13",
+      "confirmedAt": "2026-06-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-12",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-12",
+      "periodKey": "2026-06-12",
+      "confirmedAt": "2026-06-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-11",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-11",
+      "periodKey": "2026-06-11",
+      "confirmedAt": "2026-06-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-10",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-10",
+      "periodKey": "2026-06-10",
+      "confirmedAt": "2026-06-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-09",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-09",
+      "periodKey": "2026-06-09",
+      "confirmedAt": "2026-06-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-08",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-08",
+      "periodKey": "2026-06-08",
+      "confirmedAt": "2026-06-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-07",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-07",
+      "periodKey": "2026-06-07",
+      "confirmedAt": "2026-06-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-06",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-06",
+      "periodKey": "2026-06-06",
+      "confirmedAt": "2026-06-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-05",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-05",
+      "periodKey": "2026-06-05",
+      "confirmedAt": "2026-06-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-04",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-04",
+      "periodKey": "2026-06-04",
+      "confirmedAt": "2026-06-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-03",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-03",
+      "periodKey": "2026-06-03",
+      "confirmedAt": "2026-06-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-02",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-02",
+      "periodKey": "2026-06-02",
+      "confirmedAt": "2026-06-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-06-01",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-06-01",
+      "periodKey": "2026-06-01",
+      "confirmedAt": "2026-06-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-31",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-31",
+      "periodKey": "2026-05-31",
+      "confirmedAt": "2026-05-31T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-30",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-30",
+      "periodKey": "2026-05-30",
+      "confirmedAt": "2026-05-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-29",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-29",
+      "periodKey": "2026-05-29",
+      "confirmedAt": "2026-05-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-28",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-28",
+      "periodKey": "2026-05-28",
+      "confirmedAt": "2026-05-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-27",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-27",
+      "periodKey": "2026-05-27",
+      "confirmedAt": "2026-05-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-26",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-26",
+      "periodKey": "2026-05-26",
+      "confirmedAt": "2026-05-26T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-25",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-25",
+      "periodKey": "2026-05-25",
+      "confirmedAt": "2026-05-25T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-24",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-24",
+      "periodKey": "2026-05-24",
+      "confirmedAt": "2026-05-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-23",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-23",
+      "periodKey": "2026-05-23",
+      "confirmedAt": "2026-05-23T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-22",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-22",
+      "periodKey": "2026-05-22",
+      "confirmedAt": "2026-05-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-21",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-21",
+      "periodKey": "2026-05-21",
+      "confirmedAt": "2026-05-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-20",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-20",
+      "periodKey": "2026-05-20",
+      "confirmedAt": "2026-05-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-19",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-19",
+      "periodKey": "2026-05-19",
+      "confirmedAt": "2026-05-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-18",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-18",
+      "periodKey": "2026-05-18",
+      "confirmedAt": "2026-05-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-17",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-17",
+      "periodKey": "2026-05-17",
+      "confirmedAt": "2026-05-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-16",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-16",
+      "periodKey": "2026-05-16",
+      "confirmedAt": "2026-05-16T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-15",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-15",
+      "periodKey": "2026-05-15",
+      "confirmedAt": "2026-05-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-14",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-14",
+      "periodKey": "2026-05-14",
+      "confirmedAt": "2026-05-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-13",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-13",
+      "periodKey": "2026-05-13",
+      "confirmedAt": "2026-05-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-12",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-12",
+      "periodKey": "2026-05-12",
+      "confirmedAt": "2026-05-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-11",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-11",
+      "periodKey": "2026-05-11",
+      "confirmedAt": "2026-05-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-10",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-10",
+      "periodKey": "2026-05-10",
+      "confirmedAt": "2026-05-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-09",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-09",
+      "periodKey": "2026-05-09",
+      "confirmedAt": "2026-05-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-08",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-08",
+      "periodKey": "2026-05-08",
+      "confirmedAt": "2026-05-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-07",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-07",
+      "periodKey": "2026-05-07",
+      "confirmedAt": "2026-05-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-merde|2026-05-06",
+      "seriesId": "demo-merde",
+      "dayKey": "2026-05-06",
+      "periodKey": "2026-05-06",
+      "confirmedAt": "2026-05-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-10-05",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-10-05",
+      "periodKey": "2026-W41",
+      "confirmedAt": "2026-10-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-10-07",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-10-07",
+      "periodKey": "2026-W41",
+      "confirmedAt": "2026-10-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-10-09",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-10-09",
+      "periodKey": "2026-W41",
+      "confirmedAt": "2026-10-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-28",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-28",
+      "periodKey": "2026-W40",
+      "confirmedAt": "2026-09-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-30",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-30",
+      "periodKey": "2026-W40",
+      "confirmedAt": "2026-09-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-10-02",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-10-02",
+      "periodKey": "2026-W40",
+      "confirmedAt": "2026-10-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-21",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-21",
+      "periodKey": "2026-W39",
+      "confirmedAt": "2026-09-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-23",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-23",
+      "periodKey": "2026-W39",
+      "confirmedAt": "2026-09-23T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-25",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-25",
+      "periodKey": "2026-W39",
+      "confirmedAt": "2026-09-25T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-14",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-14",
+      "periodKey": "2026-W38",
+      "confirmedAt": "2026-09-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-16",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-16",
+      "periodKey": "2026-W38",
+      "confirmedAt": "2026-09-16T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-18",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-18",
+      "periodKey": "2026-W38",
+      "confirmedAt": "2026-09-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-07",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-07",
+      "periodKey": "2026-W37",
+      "confirmedAt": "2026-09-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-09",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-09",
+      "periodKey": "2026-W37",
+      "confirmedAt": "2026-09-09T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-09-11",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-09-11",
+      "periodKey": "2026-W37",
+      "confirmedAt": "2026-09-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-17",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-17",
+      "periodKey": "2026-W34",
+      "confirmedAt": "2026-08-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-19",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-19",
+      "periodKey": "2026-W34",
+      "confirmedAt": "2026-08-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-21",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-21",
+      "periodKey": "2026-W34",
+      "confirmedAt": "2026-08-21T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-10",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-10",
+      "periodKey": "2026-W33",
+      "confirmedAt": "2026-08-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-12",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-12",
+      "periodKey": "2026-W33",
+      "confirmedAt": "2026-08-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-14",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-14",
+      "periodKey": "2026-W33",
+      "confirmedAt": "2026-08-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-03",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-03",
+      "periodKey": "2026-W32",
+      "confirmedAt": "2026-08-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-05",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-05",
+      "periodKey": "2026-W32",
+      "confirmedAt": "2026-08-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-08-07",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-08-07",
+      "periodKey": "2026-W32",
+      "confirmedAt": "2026-08-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-27",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-27",
+      "periodKey": "2026-W31",
+      "confirmedAt": "2026-07-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-29",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-29",
+      "periodKey": "2026-W31",
+      "confirmedAt": "2026-07-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-31",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-31",
+      "periodKey": "2026-W31",
+      "confirmedAt": "2026-07-31T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-20",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-20",
+      "periodKey": "2026-W30",
+      "confirmedAt": "2026-07-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-22",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-22",
+      "periodKey": "2026-W30",
+      "confirmedAt": "2026-07-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-24",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-24",
+      "periodKey": "2026-W30",
+      "confirmedAt": "2026-07-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-13",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-13",
+      "periodKey": "2026-W29",
+      "confirmedAt": "2026-07-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-15",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-15",
+      "periodKey": "2026-W29",
+      "confirmedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-17",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-17",
+      "periodKey": "2026-W29",
+      "confirmedAt": "2026-07-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-06",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-06",
+      "periodKey": "2026-W28",
+      "confirmedAt": "2026-07-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-08",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-08",
+      "periodKey": "2026-W28",
+      "confirmedAt": "2026-07-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-10",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-10",
+      "periodKey": "2026-W28",
+      "confirmedAt": "2026-07-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-29",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-29",
+      "periodKey": "2026-W27",
+      "confirmedAt": "2026-06-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-01",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-01",
+      "periodKey": "2026-W27",
+      "confirmedAt": "2026-07-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-07-03",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-07-03",
+      "periodKey": "2026-W27",
+      "confirmedAt": "2026-07-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-22",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-22",
+      "periodKey": "2026-W26",
+      "confirmedAt": "2026-06-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-24",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-24",
+      "periodKey": "2026-W26",
+      "confirmedAt": "2026-06-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-26",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-26",
+      "periodKey": "2026-W26",
+      "confirmedAt": "2026-06-26T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-15",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-15",
+      "periodKey": "2026-W25",
+      "confirmedAt": "2026-06-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-17",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-17",
+      "periodKey": "2026-W25",
+      "confirmedAt": "2026-06-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-19",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-19",
+      "periodKey": "2026-W25",
+      "confirmedAt": "2026-06-19T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-08",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-08",
+      "periodKey": "2026-W24",
+      "confirmedAt": "2026-06-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-10",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-10",
+      "periodKey": "2026-W24",
+      "confirmedAt": "2026-06-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-12",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-12",
+      "periodKey": "2026-W24",
+      "confirmedAt": "2026-06-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-01",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-01",
+      "periodKey": "2026-W23",
+      "confirmedAt": "2026-06-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-03",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-03",
+      "periodKey": "2026-W23",
+      "confirmedAt": "2026-06-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-06-05",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-06-05",
+      "periodKey": "2026-W23",
+      "confirmedAt": "2026-06-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-25",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-25",
+      "periodKey": "2026-W22",
+      "confirmedAt": "2026-05-25T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-27",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-27",
+      "periodKey": "2026-W22",
+      "confirmedAt": "2026-05-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-29",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-29",
+      "periodKey": "2026-W22",
+      "confirmedAt": "2026-05-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-18",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-18",
+      "periodKey": "2026-W21",
+      "confirmedAt": "2026-05-18T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-20",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-20",
+      "periodKey": "2026-W21",
+      "confirmedAt": "2026-05-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-22",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-22",
+      "periodKey": "2026-W21",
+      "confirmedAt": "2026-05-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-11",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-11",
+      "periodKey": "2026-W20",
+      "confirmedAt": "2026-05-11T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-13",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-13",
+      "periodKey": "2026-W20",
+      "confirmedAt": "2026-05-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-15",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-15",
+      "periodKey": "2026-W20",
+      "confirmedAt": "2026-05-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-04",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-04",
+      "periodKey": "2026-W19",
+      "confirmedAt": "2026-05-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-06",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-06",
+      "periodKey": "2026-W19",
+      "confirmedAt": "2026-05-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-08",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-08",
+      "periodKey": "2026-W19",
+      "confirmedAt": "2026-05-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-27",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-27",
+      "periodKey": "2026-W18",
+      "confirmedAt": "2026-04-27T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-29",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-29",
+      "periodKey": "2026-W18",
+      "confirmedAt": "2026-04-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-05-01",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-05-01",
+      "periodKey": "2026-W18",
+      "confirmedAt": "2026-05-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-20",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-20",
+      "periodKey": "2026-W17",
+      "confirmedAt": "2026-04-20T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-22",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-22",
+      "periodKey": "2026-W17",
+      "confirmedAt": "2026-04-22T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-24",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-24",
+      "periodKey": "2026-W17",
+      "confirmedAt": "2026-04-24T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-13",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-13",
+      "periodKey": "2026-W16",
+      "confirmedAt": "2026-04-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-15",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-15",
+      "periodKey": "2026-W16",
+      "confirmedAt": "2026-04-15T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-17",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-17",
+      "periodKey": "2026-W16",
+      "confirmedAt": "2026-04-17T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-06",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-06",
+      "periodKey": "2026-W15",
+      "confirmedAt": "2026-04-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-08",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-08",
+      "periodKey": "2026-W15",
+      "confirmedAt": "2026-04-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-10",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-10",
+      "periodKey": "2026-W15",
+      "confirmedAt": "2026-04-10T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-03-30",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-03-30",
+      "periodKey": "2026-W14",
+      "confirmedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-01",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-01",
+      "periodKey": "2026-W14",
+      "confirmedAt": "2026-04-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-sport|2026-04-03",
+      "seriesId": "demo-sport",
+      "dayKey": "2026-04-03",
+      "periodKey": "2026-W14",
+      "confirmedAt": "2026-04-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-12",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-12",
+      "periodKey": "2026-10-12",
+      "confirmedAt": "2026-10-12T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-13",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-13",
+      "periodKey": "2026-10-13",
+      "confirmedAt": "2026-10-13T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-14",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-14",
+      "periodKey": "2026-10-14",
+      "confirmedAt": "2026-10-14T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-08",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-08",
+      "periodKey": "2026-10-08",
+      "confirmedAt": "2026-10-08T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-07",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-07",
+      "periodKey": "2026-10-07",
+      "confirmedAt": "2026-10-07T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-06",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-06",
+      "periodKey": "2026-10-06",
+      "confirmedAt": "2026-10-06T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-05",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-05",
+      "periodKey": "2026-10-05",
+      "confirmedAt": "2026-10-05T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-04",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-04",
+      "periodKey": "2026-10-04",
+      "confirmedAt": "2026-10-04T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-03",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-03",
+      "periodKey": "2026-10-03",
+      "confirmedAt": "2026-10-03T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-02",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-02",
+      "periodKey": "2026-10-02",
+      "confirmedAt": "2026-10-02T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-10-01",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-10-01",
+      "periodKey": "2026-10-01",
+      "confirmedAt": "2026-10-01T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-09-30",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-09-30",
+      "periodKey": "2026-09-30",
+      "confirmedAt": "2026-09-30T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-09-29",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-09-29",
+      "periodKey": "2026-09-29",
+      "confirmedAt": "2026-09-29T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-09-28",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-09-28",
+      "periodKey": "2026-09-28",
+      "confirmedAt": "2026-09-28T10:00:00.000Z"
+    },
+    {
+      "id": "demo-lire|2026-09-27",
+      "seriesId": "demo-lire",
+      "dayKey": "2026-09-27",
+      "periodKey": "2026-09-27",
+      "confirmedAt": "2026-09-27T10:00:00.000Z"
+    }
+  ]
+}

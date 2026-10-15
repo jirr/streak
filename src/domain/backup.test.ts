@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { at, checks, makeSeries } from '../test/fixtures.ts'
-import { buildBackup, parseBackup } from './backup.ts'
+import { buildBackup, parseBackup, shouldNudgeBackup } from './backup.ts'
 import { DEFAULT_SETTINGS, type Profile } from './types.ts'
 
 const profile: Profile = { id: 'p1', pseudo: 'Baptiste', gender: 'male', authProvider: 'local', createdAt: '2026-01-01T00:00:00.000Z' }
@@ -52,5 +52,23 @@ describe('backup', () => {
     expect(error({ ...backup, series: [null] })).toMatch(/series\[0\] invalide/)
     expect(error({ ...backup, profile: 'x' })).toMatch(/profile invalide/)
     expect(error({ ...backup, settings: 'x' })).toMatch(/settings invalide/)
+  })
+})
+
+describe('shouldNudgeBackup', () => {
+  const now = at(2026, 10, 15)
+  const daysAgo = (n: number) => new Date(now.getTime() - n * 24 * 3600 * 1000).toISOString()
+
+  it('jamais sauvegardé, assez de coches : oui ; trop peu de coches : non', () => {
+    expect(shouldNudgeBackup(7, DEFAULT_SETTINGS, now)).toBe(true)
+    expect(shouldNudgeBackup(6, DEFAULT_SETTINGS, now)).toBe(false)
+  })
+  it('sauvegarde récente (≤ 14 j) : non ; ancienne : oui', () => {
+    expect(shouldNudgeBackup(10, { ...DEFAULT_SETTINGS, lastBackupAt: daysAgo(3) }, now)).toBe(false)
+    expect(shouldNudgeBackup(10, { ...DEFAULT_SETTINGS, lastBackupAt: daysAgo(20) }, now)).toBe(true)
+  })
+  it('rappel écarté récemment : non ; écarté il y a longtemps : oui', () => {
+    expect(shouldNudgeBackup(10, { ...DEFAULT_SETTINGS, backupNudgeDismissedAt: daysAgo(2) }, now)).toBe(false)
+    expect(shouldNudgeBackup(10, { ...DEFAULT_SETTINGS, backupNudgeDismissedAt: daysAgo(15) }, now)).toBe(true)
   })
 })
