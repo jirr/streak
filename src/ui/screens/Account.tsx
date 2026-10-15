@@ -60,6 +60,7 @@ export function Account() {
   const [importError, setImportError] = useState<string | null>(null)
   const [pendingImport, setPendingImport] = useState<BackupV1 | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
+  const [exported, setExported] = useState(false)
   const [exportError, setExportError] = useState<string | null>(null)
   const [permission, setPermission] = useState<PermissionState>(() => scheduler.getPermission())
   const [testResult, setTestResult] = useState<string | null>(null)
@@ -96,6 +97,7 @@ export function Account() {
       if (outcome === 'downloaded' && byMail) {
         setExportNote('Fichier téléchargé : joins-le au mail qui vient de s\'ouvrir.')
       }
+      if (outcome !== 'cancelled' && !byMail) setExported(true)
       if (outcome !== 'cancelled') await updateSettings({ lastBackupAt: now.toISOString() })
     } catch (e) {
       console.error(e)
@@ -165,7 +167,7 @@ export function Account() {
           Exporter mes données
         </Button>
         {profile?.email ? (
-          <Button variant="secondary" fullWidth onClick={() => void doExport(true)}>
+          <Button variant="secondary" fullWidth disabled={!exported} onClick={() => void doExport(true)}>
             M'envoyer par mail
           </Button>
         ) : null}
