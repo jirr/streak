@@ -42,27 +42,19 @@ export async function exportBackupFile(backup: BackupV1, now: Date): Promise<Exp
   return 'downloaded'
 }
 
-export interface PreparedMail {
-  outcome: ExportOutcome
-  fileName: string
-}
-
 /**
- * Étape 1 de l'envoi par mail (sans serveur, un lien `mailto:` ne joint pas de fichier).
- * Mobile : la feuille de partage permet de choisir l'app Mail, fichier en pièce jointe (terminé).
- * Ailleurs : le fichier est téléchargé ; l'appelant propose ensuite `openMailClient` (étape 2).
+ * Envoi par mail sans serveur : un lien `mailto:` ne peut pas joindre de fichier.
+ * Mobile : la feuille de partage permet de choisir l'app Mail avec le fichier en pièce jointe.
+ * Ailleurs : le fichier est téléchargé, puis le client mail s'ouvre, adresse et objet préremplis ;
+ * il reste à joindre le fichier à la main.
  */
-export async function prepareEmailBackup(backup: BackupV1, now: Date): Promise<PreparedMail> {
+export async function emailBackupFile(backup: BackupV1, now: Date, email: string): Promise<ExportOutcome> {
   const file = makeFile(backup, now)
   const shared = await tryShare(file)
-  if (shared) return { outcome: shared, fileName: file.name }
+  if (shared) return shared
   download(file)
-  return { outcome: 'downloaded', fileName: file.name }
-}
-
-/** Étape 2 : ouvre le client mail, adresse et objet préremplis (appelé depuis un clic). */
-export function openMailClient(email: string, fileName: string, now: Date): void {
   const subject = encodeURIComponent(`Sauvegarde Séries ${format(now, 'yyyy-MM-dd')}`)
-  const body = encodeURIComponent(`Joins le fichier ${fileName} à ce mail.`)
-  window.location.href = `mailto:${email}?subject=${subject}&body=${body}`
+  const body = encodeURIComponent(`Joins le fichier ${file.name} (téléchargé à l'instant) à ce mail.`)
+  window.location.href = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`
+  return 'downloaded'
 }
