@@ -1,0 +1,23 @@
+:root {
+  --bg: #f1f3f6;
+  --card: #ffffff;
+  --ink: #12141a;
+  --ink-2: #5b6170;
+  --border: #d3d7de;
+  --border-soft: #e2e5ea;
+  --accent: #d9420c;
+  --success: #0e7a5a;
+  --tint-orange: #fde4d8;
+  --tint-beige: #efe6da;
+  --tint-blue: #e1eafb;
+  --tint-green: #ddf1e8;
+  --tint-purple: #ece3f8;
+  --tint-yellow: #fbf0cf;
+  --radius-card: 20px;
+  --radius-field: 12px;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --tap: 44px;
+  --maxw: 480px;
+  --nav-h: 72px;
+}
