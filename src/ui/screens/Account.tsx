@@ -58,6 +58,7 @@ export function Account() {
   const [confirmReset, setConfirmReset] = useState(false)
   const [exportError, setExportError] = useState<string | null>(null)
   const [permission, setPermission] = useState<PermissionState>(() => scheduler.getPermission())
+  const [testResult, setTestResult] = useState<string | null>(null)
   const fileInput = useRef<HTMLInputElement>(null)
 
   const savePseudo = () => {
@@ -168,6 +169,25 @@ export function Account() {
           >
             Activer les notifications
           </Button>
+        ) : null}
+        {permission === 'granted' ? (
+          <>
+            <Button
+              variant="secondary"
+              fullWidth
+              onClick={async () => {
+                try {
+                  await scheduler.sendTest()
+                  setTestResult('Notification envoyée. Rien reçu ? Vérifie les réglages du système et du navigateur.')
+                } catch (e) {
+                  setTestResult(`Impossible d'afficher la notification : ${e instanceof Error ? e.message : e}`)
+                }
+              }}
+            >
+              Tester une notification
+            </Button>
+            {testResult ? <p className={styles.muted}>{testResult}</p> : null}
+          </>
         ) : null}
         <div className={styles.switchRow}>
           <span className={styles.label}>Rappels</span>

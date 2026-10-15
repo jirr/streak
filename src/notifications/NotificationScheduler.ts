@@ -18,5 +18,7 @@ export interface NotificationScheduler {
   requestPermission(): Promise<PermissionState>
   /** Met à jour le badge et (re)programme les rappels. */
   sync(snapshot: ReminderSnapshot): Promise<void>
+  /** Affiche tout de suite une notification de test ; lève une erreur si impossible. */
+  sendTest(): Promise<void>
   dispose(): void
 }

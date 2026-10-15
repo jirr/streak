@@ -16,6 +16,7 @@ type BadgeNavigator = Navigator & {
 export class WebNotificationScheduler implements NotificationScheduler {
   private timer: ReturnType<typeof setTimeout> | undefined
   private periodicRegistered = false
+  private checking = false
 
   getPermission(): PermissionState {
     return 'Notification' in window ? Notification.permission : 'unsupported'
@@ -43,10 +44,12 @@ export class WebNotificationScheduler implements NotificationScheduler {
     clearTimeout(this.timer)
     if (this.getPermission() !== 'granted') return
     void this.registerPeriodicSync()
+    // Rappel manqué (page gelée, appareil en veille) : on le rattrape dès qu'on reprend la main.
+    void this.fire(false)
     const at = nextReminderAt(series, now, settings.remindersEnabled)
     if (at) {
       const delay = Math.min(at.getTime() - now.getTime() + 500, MAX_TIMEOUT)
-      this.timer = setTimeout(() => void this.fire(), delay)
+      this.timer = setTimeout(() => void this.fire(true), delay)
     }
   }
 
@@ -54,7 +57,18 @@ export class WebNotificationScheduler implements NotificationScheduler {
     clearTimeout(this.timer)
   }
 
-  private async fire(): Promise<void> {
+  async sendTest(): Promise<void> {
+    if (this.getPermission() !== 'granted') throw new Error('Notifications non autorisées')
+    const registration = await navigator.serviceWorker?.getRegistration()
+    const n = { title: 'Séries', body: 'Test : les notifications fonctionnent.', tag: 'series-test' }
+    if (registration) await registration.showNotification(n.title, notificationOptions(n, registration.scope))
+    else new Notification(n.title, { body: n.body, tag: n.tag })
+  }
+
+  /** Relit les données et notifie les rappels dus ; `reschedule` relance ensuite la programmation. */
+  private async fire(reschedule: boolean): Promise<void> {
+    if (this.checking) return
+    this.checking = true
     try {
       const registration = await navigator.serviceWorker?.getRegistration()
       await runReminderCheck(repos, new Date(), async (n) => {
@@ -63,8 +77,10 @@ export class WebNotificationScheduler implements NotificationScheduler {
       })
     } catch (e) {
       console.warn('Rappel non affiché', e)
+    } finally {
+      this.checking = false
     }
-    // Se reprogramme avec des données fraîches.
+    if (!reschedule) return
     const [series, checkIns, settings] = await Promise.all([repos.series.list(), repos.checkIns.list(), repos.settings.get()])
     await this.sync({ series, checkIns, settings, now: new Date() })
   }
