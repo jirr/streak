@@ -1,7 +1,7 @@
 import { differenceInCalendarDays } from 'date-fns'
 import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { emailBackupFile, exportBackupFile } from '../../app/backupFile.ts'
+import { exportBackupFile, openMailClient, prepareEmailBackup } from '../../app/backupFile.ts'
 import { useAppStore } from '../../app/store.ts'
 import { useNow } from '../../app/useNow.ts'
 import { scheduler } from '../../notifications/index.ts'
@@ -14,6 +14,7 @@ import type { BackupV1, Gender } from '../../domain/types.ts'
 import { Button } from '../components/Button.tsx'
 import { DoubleConfirm } from '../components/DoubleConfirm.tsx'
 import { PageHeader } from '../components/PageHeader.tsx'
+import { Sheet } from '../components/Sheet.tsx'
 import { Segmented } from '../components/Segmented.tsx'
 import { Toggle } from '../components/Toggle.tsx'
 import styles from './Account.module.css'
@@ -56,7 +57,8 @@ export function Account() {
   const [pseudo, setPseudo] = useState(profile?.pseudo ?? '')
   const [email, setEmail] = useState(profile?.email ?? '')
   const [emailError, setEmailError] = useState<string | null>(null)
-  const [exportNote, setExportNote] = useState<string | null>(null)
+  const [mailSheet, setMailSheet] = useState<{ fileName: string; at: Date } | null>(null)
+  const [copied, setCopied] = useState(false)
   const [importError, setImportError] = useState<string | null>(null)
   const [pendingImport, setPendingImport] = useState<BackupV1 | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
@@ -88,13 +90,19 @@ export function Account() {
 
   const doExport = async (byMail: boolean) => {
     setExportError(null)
-    setExportNote(null)
     const now = new Date()
     try {
       const backup = await exportData()
-      const outcome = byMail && profile?.email ? await emailBackupFile(backup, now, profile.email) : await exportBackupFile(backup, now)
-      if (outcome === 'downloaded' && byMail) {
-        setExportNote('Fichier téléchargé : joins-le au mail qui vient de s\'ouvrir.')
+      let outcome
+      if (byMail) {
+        const prepared = await prepareEmailBackup(backup, now)
+        outcome = prepared.outcome
+        if (outcome === 'downloaded') {
+          setCopied(false)
+          setMailSheet({ fileName: prepared.fileName, at: now })
+        }
+      } else {
+        outcome = await exportBackupFile(backup, now)
       }
       if (outcome !== 'cancelled') await updateSettings({ lastBackupAt: now.toISOString() })
     } catch (e) {
@@ -169,7 +177,6 @@ export function Account() {
             M'envoyer par mail
           </Button>
         ) : null}
-        {exportNote ? <p className={styles.muted}>{exportNote}</p> : null}
         {exportError ? (
           <p className={styles.error} role="alert">
             {exportError}
@@ -287,6 +294,35 @@ export function Account() {
           Tout effacer
         </Button>
       </section>
+
+      <Sheet open={mailSheet !== null} onClose={() => setMailSheet(null)} title="Envoyer par mail">
+        {mailSheet && profile?.email ? (
+          <div className={styles.mailSteps}>
+            <p>
+              <strong>1.</strong> Le fichier <code>{mailSheet.fileName}</code> vient d'être téléchargé.
+            </p>
+            <p>
+              <strong>2.</strong> Ouvre ton mail, puis joins ce fichier au message pour {profile.email}.
+            </p>
+            <Button fullWidth onClick={() => openMailClient(profile.email!, mailSheet.fileName, mailSheet.at)}>
+              Ouvrir mon client mail
+            </Button>
+            <Button
+              variant="secondary"
+              fullWidth
+              onClick={async () => {
+                await navigator.clipboard?.writeText(profile.email!)
+                setCopied(true)
+              }}
+            >
+              {copied ? 'Adresse copiée' : "Copier l'adresse (webmail)"}
+            </Button>
+            <Button variant="ghost" fullWidth onClick={() => setMailSheet(null)}>
+              Fermer
+            </Button>
+          </div>
+        ) : null}
+      </Sheet>
 
       <DoubleConfirm
         open={pendingImport !== null}

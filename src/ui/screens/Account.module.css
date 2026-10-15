@@ -69,3 +69,14 @@
   align-items: center;
   justify-content: space-between;
 }
+.mailSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mailSteps code {
+  word-break: break-all;
+  background: var(--border-soft);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
