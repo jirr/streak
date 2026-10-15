@@ -30,6 +30,10 @@ interface AppState {
   settings: Settings
   series: Series[]
   checkIns: CheckIn[]
+  /** Invite de notifications à montrer au retour sur l'accueil (après la 1re série). */
+  notificationPromptPending: boolean
+  /** Bandeau « pas encore coché » fermé pour ce jour (état de session). */
+  bannerDismissedDayKey: string | null
 
   init(): Promise<void>
   completeOnboarding(pseudo: string, gender?: Gender): Promise<void>
@@ -45,6 +49,8 @@ interface AppState {
   exportData(): Promise<BackupV1>
   importData(b: BackupV1): Promise<void>
   resetAll(): Promise<void>
+  clearNotificationPrompt(): Promise<void>
+  dismissBanner(dayKey: string): void
 }
 
 function sortSeries(list: Series[]): Series[] {
@@ -85,6 +91,8 @@ export const useAppStore = create<AppState>()((set, get) => {
     settings: DEFAULT_SETTINGS,
     series: [],
     checkIns: [],
+    notificationPromptPending: false,
+    bannerDismissedDayKey: null,
 
     init: reload,
 
@@ -131,7 +139,11 @@ export const useAppStore = create<AppState>()((set, get) => {
         updatedAt: now,
       }
       await repos.series.put(series)
-      set((st) => ({ series: sortSeries([...st.series, series]) }))
+      const firstSeries = get().series.length === 0 && !get().settings.notificationsPrompted
+      set((st) => ({
+        series: sortSeries([...st.series, series]),
+        notificationPromptPending: st.notificationPromptPending || firstSeries,
+      }))
       return series
     },
 
@@ -206,7 +218,23 @@ export const useAppStore = create<AppState>()((set, get) => {
 
     async resetAll() {
       await repos.backup.clearAll()
-      set({ status: 'onboarding', profile: null, settings: DEFAULT_SETTINGS, series: [], checkIns: [] })
+      set({
+        status: 'onboarding',
+        profile: null,
+        settings: DEFAULT_SETTINGS,
+        series: [],
+        checkIns: [],
+        notificationPromptPending: false,
+      })
+    },
+
+    async clearNotificationPrompt() {
+      set({ notificationPromptPending: false })
+      if (!get().settings.notificationsPrompted) await get().updateSettings({ notificationsPrompted: true })
+    },
+
+    dismissBanner(dayKey) {
+      set({ bannerDismissedDayKey: dayKey })
     },
   }
 })

@@ -1,12 +1,16 @@
 import { LayoutGrid, List } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useAppStore } from '../../app/store.ts'
 import { useSeriesStats } from '../../app/useSeriesStats.ts'
+import { scheduler } from '../../notifications/index.ts'
+import { syncReminders } from '../../notifications/syncReminders.ts'
 import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
 import { shouldNudgeBackup } from '../../domain/backup.ts'
 import { canUndo, nextCheckTarget, type CheckTarget } from '../../domain/checkins.ts'
 import { confirmSubtitle, progressLabel, unitLabel } from '../../domain/labels.ts'
+import { toDayKey } from '../../domain/periods.ts'
+import { uncheckedToday } from '../../domain/reminders.ts'
 import type { Series } from '../../domain/types.ts'
 import { AdSlot } from '../components/AdSlot.tsx'
 import { Banner } from '../components/Banner.tsx'
@@ -36,6 +40,10 @@ export function Home() {
   const checkIn = useAppStore((s) => s.checkIn)
   const undoCheckIn = useAppStore((s) => s.undoCheckIn)
   const updateSettings = useAppStore((s) => s.updateSettings)
+  const promptPending = useAppStore((s) => s.notificationPromptPending)
+  const clearNotificationPrompt = useAppStore((s) => s.clearNotificationPrompt)
+  const bannerDismissedDayKey = useAppStore((s) => s.bannerDismissedDayKey)
+  const dismissBanner = useAppStore((s) => s.dismissBanner)
   const { now, stats } = useSeriesStats()
   const { canInstall, promptInstall } = useInstallPrompt()
 
@@ -47,9 +55,20 @@ export function Home() {
   const iosInstall = isIos() && !isStandalone()
   const showInstallNudge = !settings.installNudgeDismissed && (canInstall || iosInstall)
   const showBackupNudge = shouldNudgeBackup(checkIns.length, settings, now)
+  const permission = scheduler.getPermission()
+  const needsIosInstall = permission === 'unsupported' && isIos() && !isStandalone()
+  const promptable = permission === 'default' || needsIosInstall
+  const today = toDayKey(now)
+  const unchecked = uncheckedToday(series, checkIns, now, settings.graceHour)
+  const showUncheckedBanner = unchecked.length > 0 && bannerDismissedDayKey !== today
   const view = settings.viewMode
   const active = series.filter((s) => !s.archivedAt)
   const closeCelebration = useCallback(() => setCelebration(null), [])
+
+  // Invite devenue sans objet (permission déjà tranchée) : on la considère comme montrée.
+  useEffect(() => {
+    if (promptPending && !promptable) void clearNotificationPrompt()
+  }, [promptPending, promptable, clearNotificationPrompt])
 
   const onAction = (s: Series) => {
     const target = nextCheckTarget(s, checkIns, now, settings.graceHour)
@@ -109,6 +128,14 @@ export function Home() {
           </div>
         ) : null}
       </header>
+
+      {showUncheckedBanner ? (
+        <div className={styles.nudge}>
+          <Banner tone="accent" badge={unchecked.length} onDismiss={() => dismissBanner(today)}>
+            Tu n'as pas encore coché aujourd'hui
+          </Banner>
+        </div>
+      ) : null}
 
       {showInstallNudge ? (
         <div className={styles.nudge}>
@@ -192,6 +219,43 @@ export function Home() {
           </Button>
           <Button variant="secondary" fullWidth onClick={() => setUndoTarget(null)}>
             Non, c'est bon
+          </Button>
+        </div>
+      </Sheet>
+
+      <Sheet
+        open={promptPending && promptable}
+        onClose={() => void clearNotificationPrompt()}
+        title="Je te rappelle de cocher ?"
+      >
+        <p className={styles.sheetText}>
+          Tous les soirs à {series[0]?.reminder.time ?? '21:00'}, si tu n'as pas encore coché.
+        </p>
+        <div className={styles.sheetActions}>
+          {needsIosInstall ? (
+            <Button
+              fullWidth
+              onClick={() => {
+                void clearNotificationPrompt()
+                navigate('/install')
+              }}
+            >
+              Installer d'abord
+            </Button>
+          ) : (
+            <Button
+              fullWidth
+              onClick={async () => {
+                await scheduler.requestPermission()
+                await clearNotificationPrompt()
+                await syncReminders()
+              }}
+            >
+              Oui, rappelle-moi
+            </Button>
+          )}
+          <Button variant="secondary" fullWidth onClick={() => void clearNotificationPrompt()}>
+            Plus tard
           </Button>
         </div>
       </Sheet>

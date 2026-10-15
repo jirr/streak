@@ -69,3 +69,7 @@
   text-decoration: none;
   padding: 10px 4px;
 }
+.sheetText {
+  color: var(--ink-2);
+  margin-bottom: 16px;
+}

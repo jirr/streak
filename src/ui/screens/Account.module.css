@@ -64,3 +64,8 @@
   display: inline-flex;
   align-items: center;
 }
+.switchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

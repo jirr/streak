@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router'
 import { exportBackupFile } from '../../app/backupFile.ts'
 import { useAppStore } from '../../app/store.ts'
 import { useNow } from '../../app/useNow.ts'
+import { scheduler } from '../../notifications/index.ts'
+import type { PermissionState } from '../../notifications/NotificationScheduler.ts'
+import { syncReminders } from '../../notifications/syncReminders.ts'
 import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
 import { parseBackup } from '../../domain/backup.ts'
 import type { BackupV1, Gender } from '../../domain/types.ts'
@@ -11,6 +14,7 @@ import { Button } from '../components/Button.tsx'
 import { DoubleConfirm } from '../components/DoubleConfirm.tsx'
 import { PageHeader } from '../components/PageHeader.tsx'
 import { Segmented } from '../components/Segmented.tsx'
+import { Toggle } from '../components/Toggle.tsx'
 import styles from './Account.module.css'
 
 const GENDERS: { value: Gender; label: string }[] = [
@@ -19,6 +23,13 @@ const GENDERS: { value: Gender; label: string }[] = [
   { value: 'other', label: 'Autre' },
   { value: 'unspecified', label: 'Ne pas préciser' },
 ]
+
+const PERMISSION_LABELS: Record<PermissionState, string> = {
+  granted: 'Activées',
+  denied: 'Bloquées dans le navigateur',
+  default: 'Pas encore autorisées',
+  unsupported: 'Non supportées ici',
+}
 
 const GRACE_OPTIONS = [0, 1, 2, 3, 4, 5, 6]
 
@@ -46,6 +57,7 @@ export function Account() {
   const [pendingImport, setPendingImport] = useState<BackupV1 | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
   const [exportError, setExportError] = useState<string | null>(null)
+  const [permission, setPermission] = useState<PermissionState>(() => scheduler.getPermission())
   const fileInput = useRef<HTMLInputElement>(null)
 
   const savePseudo = () => {
@@ -141,6 +153,38 @@ export function Account() {
             {importError}
           </p>
         ) : null}
+      </section>
+
+      <section className={styles.card}>
+        <h2 className={styles.h2}>Notifications</h2>
+        <p className={styles.strong}>{PERMISSION_LABELS[permission]}</p>
+        {permission === 'default' ? (
+          <Button
+            fullWidth
+            onClick={async () => {
+              setPermission(await scheduler.requestPermission())
+              await syncReminders()
+            }}
+          >
+            Activer les notifications
+          </Button>
+        ) : null}
+        <div className={styles.switchRow}>
+          <span className={styles.label}>Rappels</span>
+          <Toggle
+            label="Rappels"
+            checked={settings.remindersEnabled}
+            onChange={(v) => void updateSettings({ remindersEnabled: v })}
+          />
+        </div>
+        {isIos() && !isStandalone() ? (
+          <Link to="/install" className={styles.link}>
+            Sur iPhone, installe l'app d'abord
+          </Link>
+        ) : null}
+        <p className={styles.muted}>
+          Les rappels sont best effort : ils arrivent surtout quand l'app est ouverte ou récemment utilisée.
+        </p>
       </section>
 
       <section className={styles.card}>
