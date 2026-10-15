@@ -1,0 +1,49 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 32px;
+}
+.page > * {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.page > header {
+  margin-left: 0;
+  margin-right: 0;
+}
+.steps {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--card);
+  border-radius: 16px;
+  font-size: 16px;
+}
+.icon {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--tint-blue);
+  display: grid;
+  place-items: center;
+}
+.callout {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--tint-orange);
+  font-size: 15px;
+}
+.note {
+  color: var(--ink-2);
+  font-size: 14px;
+}

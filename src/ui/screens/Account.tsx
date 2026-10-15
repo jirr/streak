@@ -1,8 +1,10 @@
 import { differenceInCalendarDays } from 'date-fns'
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { exportBackupFile } from '../../app/backupFile.ts'
 import { useAppStore } from '../../app/store.ts'
+import { useNow } from '../../app/useNow.ts'
+import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
 import { parseBackup } from '../../domain/backup.ts'
 import type { BackupV1, Gender } from '../../domain/types.ts'
 import { Button } from '../components/Button.tsx'
@@ -29,6 +31,8 @@ function lastBackupLabel(iso: string | undefined, now: Date): string {
 
 export function Account() {
   const navigate = useNavigate()
+  const now = useNow()
+  const { canInstall, promptInstall } = useInstallPrompt()
   const profile = useAppStore((s) => s.profile)
   const settings = useAppStore((s) => s.settings)
   const updateProfile = useAppStore((s) => s.updateProfile)
@@ -105,7 +109,7 @@ export function Account() {
 
       <section className={`${styles.card} ${styles.highlight}`}>
         <h2 className={styles.h2}>Sauvegarde</h2>
-        <p className={styles.strong}>Dernière sauvegarde : {lastBackupLabel(settings.lastBackupAt, new Date())}</p>
+        <p className={styles.strong}>Dernière sauvegarde : {lastBackupLabel(settings.lastBackupAt, now)}</p>
         <p className={styles.muted}>
           Tes données vivent uniquement sur cet appareil. Si l'adresse de l'app change ou si tu vides ton navigateur,
           elles disparaissent.
@@ -160,6 +164,16 @@ export function Account() {
 
       <section className={styles.card}>
         <h2 className={styles.h2}>Application</h2>
+        {canInstall ? (
+          <Button variant="secondary" fullWidth onClick={() => void promptInstall()}>
+            Installer l'app
+          </Button>
+        ) : null}
+        {isIos() && !isStandalone() ? (
+          <Link to="/install" className={styles.link}>
+            Installer sur iPhone
+          </Link>
+        ) : null}
         <p className={styles.muted}>Version {__APP_VERSION__}</p>
       </section>
 

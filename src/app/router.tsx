@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { createHashRouter, Navigate, Outlet, useLocation } from 'react-router'
+import { UpdateBanner } from '../pwa/UpdateBanner.tsx'
 import { BottomNav } from '../ui/components/BottomNav.tsx'
 import { Account } from '../ui/screens/Account.tsx'
 import { HallOfFame } from '../ui/screens/HallOfFame.tsx'
 import { Home } from '../ui/screens/Home.tsx'
+import { InstallHelp } from '../ui/screens/InstallHelp.tsx'
 import { Onboarding } from '../ui/screens/Onboarding.tsx'
 import { SeriesForm } from '../ui/screens/SeriesForm.tsx'
 import { useAppStore } from './store.ts'
@@ -20,7 +22,12 @@ function RootLayout() {
   if (status === 'loading') return <div style={{ minHeight: '100dvh', background: 'var(--bg)' }} />
   if (status === 'onboarding' && pathname !== '/onboarding') return <Navigate to="/onboarding" replace />
   if (status === 'ready' && pathname === '/onboarding') return <Navigate to="/" replace />
-  return <Outlet />
+  return (
+    <>
+      <UpdateBanner />
+      <Outlet />
+    </>
+  )
 }
 
 function TabsLayout() {
@@ -45,6 +52,7 @@ export const router = createHashRouter([
           { path: '/account', element: <Account /> },
         ],
       },
+      { path: '/install', element: <InstallHelp /> },
       { path: '/series/new', element: <SeriesForm /> },
       { path: '/series/:id/edit', element: <SeriesForm /> },
       { path: '*', element: <Navigate to="/" replace /> },

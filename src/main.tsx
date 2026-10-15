@@ -1,3 +1,4 @@
+import './pwa/installPrompt.ts'
 import '@fontsource/space-grotesk/500.css'
 import '@fontsource/space-grotesk/700.css'
 import '@fontsource/dm-sans/400.css'

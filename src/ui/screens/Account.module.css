@@ -57,3 +57,10 @@
   font-weight: 700;
   font-size: 14px;
 }
+.link {
+  color: var(--accent);
+  font-weight: 700;
+  min-height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+}

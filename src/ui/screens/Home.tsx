@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useAppStore } from '../../app/store.ts'
 import { useSeriesStats } from '../../app/useSeriesStats.ts'
+import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
 import { shouldNudgeBackup } from '../../domain/backup.ts'
 import { canUndo, nextCheckTarget, type CheckTarget } from '../../domain/checkins.ts'
 import { confirmSubtitle, progressLabel, unitLabel } from '../../domain/labels.ts'
@@ -36,12 +37,15 @@ export function Home() {
   const undoCheckIn = useAppStore((s) => s.undoCheckIn)
   const updateSettings = useAppStore((s) => s.updateSettings)
   const { now, stats } = useSeriesStats()
+  const { canInstall, promptInstall } = useInstallPrompt()
 
   const [pending, setPending] = useState<PendingCheck | null>(null)
   const [undoTarget, setUndoTarget] = useState<Series | null>(null)
   const [celebration, setCelebration] = useState<CelebrationState | null>(null)
   const [pulseId, setPulseId] = useState<string | null>(null)
 
+  const iosInstall = isIos() && !isStandalone()
+  const showInstallNudge = !settings.installNudgeDismissed && (canInstall || iosInstall)
   const showBackupNudge = shouldNudgeBackup(checkIns.length, settings, now)
   const view = settings.viewMode
   const active = series.filter((s) => !s.archivedAt)
@@ -105,6 +109,28 @@ export function Home() {
           </div>
         ) : null}
       </header>
+
+      {showInstallNudge ? (
+        <div className={styles.nudge}>
+          <Banner
+            tone="accent"
+            action={
+              canInstall ? (
+                <button type="button" className={styles.bannerLink} onClick={() => void promptInstall()}>
+                  Installer l'app
+                </button>
+              ) : (
+                <Link to="/install" className={styles.bannerLink}>
+                  Installer sur iPhone
+                </Link>
+              )
+            }
+            onDismiss={() => void updateSettings({ installNudgeDismissed: true })}
+          >
+            Garde Séries sous la main.
+          </Banner>
+        </div>
+      ) : null}
 
       {showBackupNudge ? (
         <div className={styles.nudge}>
