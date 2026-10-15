@@ -1,0 +1,41 @@
+.button {
+  min-height: var(--tap);
+  padding: 0 20px;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  font-weight: 700;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.full {
+  width: 100%;
+}
+.primary {
+  background: var(--accent);
+  color: #fff;
+}
+.secondary {
+  background: var(--card);
+  color: var(--ink);
+  border-color: var(--border);
+}
+.ghost {
+  background: transparent;
+  color: var(--ink-2);
+}
+.danger {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}

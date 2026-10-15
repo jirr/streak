@@ -1,0 +1,23 @@
+.group {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--border-soft);
+  border-radius: 14px;
+}
+.option {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+.active {
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+}

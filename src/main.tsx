@@ -7,13 +7,11 @@ import './ui/theme/tokens.css'
 import './ui/theme/global.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { toDayKey } from './domain/periods.ts'
+import { RouterProvider } from 'react-router'
+import { router } from './app/router.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <main style={{ padding: 24 }}>
-      <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>Séries</h1>
-      <p>Chaque jour compte. {toDayKey(new Date())}</p>
-    </main>
+    <RouterProvider router={router} />
   </StrictMode>,
 )

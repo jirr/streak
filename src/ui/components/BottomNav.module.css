@@ -1,0 +1,42 @@
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--maxw));
+  height: calc(var(--nav-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--card);
+  border-top: 1px solid var(--border-soft);
+  display: grid;
+  grid-template-columns: 1fr 88px 1fr;
+  align-items: center;
+  z-index: 20;
+}
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: var(--tap);
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+}
+.active {
+  color: var(--ink);
+  font-weight: 700;
+}
+.add {
+  justify-self: center;
+  width: 56px;
+  height: 56px;
+  margin-top: -32px;
+  border-radius: 18px;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 16px rgba(217, 66, 12, 0.35);
+}

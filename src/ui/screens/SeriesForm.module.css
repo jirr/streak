@@ -1,0 +1,232 @@
+.page {
+  min-height: 100dvh;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 20px 0;
+}
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink-2);
+  margin-bottom: 10px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  font-weight: 500;
+  font-size: 15px;
+}
+.chipActive {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.link {
+  margin-top: 12px;
+  min-height: var(--tap);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 15px;
+}
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.category {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.categoryHead {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  text-align: left;
+}
+.preset {
+  width: 100%;
+  padding: 10px 16px;
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  background: transparent;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+}
+.presetTile {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+.presetText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 15px;
+}
+.presetText small {
+  color: var(--ink-2);
+  font-size: 13px;
+}
+.card {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.label {
+  font-size: 14px;
+  font-weight: 700;
+}
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-field);
+  background: var(--card);
+  font-size: 16px;
+}
+.input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  font-size: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.iconActive {
+  border-color: var(--ink);
+  border-width: 2px;
+  background: var(--border-soft);
+}
+.iconAdd {
+  border-style: dashed;
+  color: var(--ink-2);
+}
+.colors {
+  display: flex;
+  gap: 10px;
+}
+.color {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(18, 20, 26, 0.12);
+  padding: 0;
+}
+.colorActive {
+  border-color: var(--ink);
+}
+.custom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 8px;
+  font-size: 15px;
+  text-align: center;
+}
+.stepBtn {
+  width: var(--tap);
+  height: var(--tap);
+  flex: none;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  display: grid;
+  place-items: center;
+}
+.stepBtn:disabled {
+  opacity: 0.4;
+}
+.reminder {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.reminderText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.reminderText small {
+  color: var(--ink-2);
+  font-size: 13px;
+}
+.time {
+  flex-basis: 100%;
+}
+.danger {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sticky {
+  position: sticky;
+  bottom: 0;
+  margin: 0 -20px;
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--bg) 70%, transparent);
+}

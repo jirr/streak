@@ -1,0 +1,12 @@
+.page {
+  padding: calc(24px + env(safe-area-inset-top)) 20px calc(var(--nav-h) + 32px);
+}
+.greeting {
+  color: var(--ink-2);
+  font-size: 14px;
+}
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+}

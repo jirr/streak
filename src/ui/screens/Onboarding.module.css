@@ -1,0 +1,136 @@
+.page {
+  min-height: 100dvh;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.hero {
+  padding: calc(48px + env(safe-area-inset-top)) 24px 32px;
+  color: #fff;
+}
+.logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  margin-bottom: 24px;
+}
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+  color: #fff;
+}
+.subtitle {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 16px;
+}
+.sheet {
+  flex: 1;
+  background: var(--card);
+  border-radius: 28px 28px 0 0;
+  padding: 28px 24px calc(24px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-field);
+  background: var(--card);
+  font-size: 16px;
+}
+.input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink-2);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-soft);
+}
+.soonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0.5;
+}
+.provider {
+  min-height: 48px;
+  border-radius: 14px;
+  border: 1.5px solid var(--ink);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: not-allowed;
+}
+.apple {
+  background: #000;
+  color: #fff;
+}
+.google {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--border);
+}
+.soon {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--border-soft);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.emailRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.emailGo {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  display: grid;
+  place-items: center;
+  cursor: not-allowed;
+}
+.footer {
+  margin-top: auto;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-2);
+}
