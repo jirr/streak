@@ -1,0 +1,41 @@
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 14px;
+  min-height: 52px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border-soft);
+  font-size: 14px;
+}
+.accent {
+  background: var(--tint-orange);
+  border-color: transparent;
+}
+.badge {
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 13px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+}
+.text {
+  flex: 1;
+  font-weight: 500;
+}
+.close {
+  width: var(--tap);
+  height: var(--tap);
+  flex: none;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: var(--ink-2);
+}

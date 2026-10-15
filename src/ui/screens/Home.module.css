@@ -1,5 +1,12 @@
 .page {
-  padding: calc(24px + env(safe-area-inset-top)) 20px calc(var(--nav-h) + 32px);
+  padding: calc(24px + env(safe-area-inset-top)) 16px calc(var(--nav-h) + env(safe-area-inset-bottom) + 56px + 32px);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 4px;
+  margin-bottom: 16px;
 }
 .greeting {
   color: var(--ink-2);
@@ -9,4 +16,43 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 30px;
+  line-height: 1.15;
+}
+.toggles {
+  display: flex;
+  gap: 6px;
+}
+.toggle {
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  display: grid;
+  place-items: center;
+}
+.toggleActive {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.empty {
+  padding: 8px 4px 20px;
+  color: var(--ink-2);
+  font-size: 16px;
+}
+.sheetActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -1,0 +1,59 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.confetti {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+}
+.piece {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(18, 20, 26, 0.12);
+  animation: burst 1.2s cubic-bezier(0.2, 0.7, 0.3, 1) var(--delay) forwards;
+  opacity: 0;
+}
+@keyframes burst {
+  0% {
+    transform: translate(0, 0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), calc(var(--dy) + 120px)) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+.message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  animation: pop 0.35s ease-out;
+}
+.record {
+  background: var(--accent);
+}
+@keyframes pop {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}

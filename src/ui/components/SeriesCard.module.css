@@ -1,0 +1,184 @@
+.card,
+.listCard {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  border: 2px solid transparent;
+}
+.checked {
+  border-color: var(--success);
+}
+.pulse {
+  animation: pulse 0.6s ease-in-out 2;
+}
+@keyframes pulse {
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* ---- grille ---- */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 12px;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  flex: 1;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+.tile {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  flex: none;
+}
+.best {
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.count {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.countNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+}
+.countUnit {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.status {
+  font-size: 12px;
+  color: var(--ink-2);
+  min-height: 16px;
+}
+.risk {
+  color: var(--accent);
+  font-weight: 700;
+}
+.action {
+  width: 100%;
+  min-height: var(--tap);
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 15px;
+  border: 1.5px solid transparent;
+}
+.action_todo {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.action_done {
+  background: var(--success);
+  color: #fff;
+}
+.action_validated {
+  background: var(--border-soft);
+  color: var(--ink-2);
+}
+
+/* ---- liste ---- */
+.listCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+.listBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+.listCount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 64px;
+}
+.listCount .countNum {
+  font-size: 32px;
+}
+.listText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.round {
+  width: var(--tap);
+  height: var(--tap);
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 2px solid transparent;
+}
+.round_todo {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.round_done {
+  background: var(--success);
+  color: #fff;
+}
+.round_validated {
+  background: var(--border-soft);
+  color: var(--ink-2);
+}
+
+/* ---- carte « nouvelle série » ---- */
+.newGrid,
+.newList {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-card);
+  background: transparent;
+  color: var(--ink-2);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.newGrid {
+  flex-direction: column;
+  min-height: 180px;
+}
+.newList {
+  min-height: 64px;
+  width: 100%;
+}

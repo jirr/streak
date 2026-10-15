@@ -1,0 +1,17 @@
+.slot {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 8px);
+  transform: translateX(-50%);
+  width: calc(min(100%, var(--maxw)) - 32px);
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--ink-2);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  z-index: 10;
+}
