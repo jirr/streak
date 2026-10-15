@@ -1,8 +1,10 @@
 import { ArrowRight, Flame } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useAppStore } from '../../app/store.ts'
 import type { Gender } from '../../domain/types.ts'
+import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
+import { Banner } from '../components/Banner.tsx'
 import { Button } from '../components/Button.tsx'
 import { Segmented } from '../components/Segmented.tsx'
 import styles from './Onboarding.module.css'
@@ -24,6 +26,10 @@ export function Onboarding() {
   const [pseudo, setPseudo] = useState('')
   const [gender, setGender] = useState<Gender | undefined>()
   const [busy, setBusy] = useState(false)
+  const [installDismissed, setInstallDismissed] = useState(false)
+  const { canInstall, promptInstall } = useInstallPrompt()
+  const iosInstall = isIos() && !isStandalone()
+  const showInstall = !installDismissed && (canInstall || iosInstall)
   const valid = pseudo.trim().length >= 1 && pseudo.trim().length <= 30
 
   const submit = async (e: FormEvent) => {
@@ -45,6 +51,26 @@ export function Onboarding() {
       </section>
 
       <form className={styles.sheet} onSubmit={submit}>
+        {showInstall ? (
+          <Banner
+            tone="accent"
+            action={
+              canInstall ? (
+                <button type="button" className={styles.installLink} onClick={() => void promptInstall()}>
+                  Installer l'app
+                </button>
+              ) : (
+                <Link to="/install" className={styles.installLink}>
+                  Installer sur iPhone
+                </Link>
+              )
+            }
+            onDismiss={() => setInstallDismissed(true)}
+          >
+            Garde Séries sous la main.
+          </Banner>
+        ) : null}
+
         <label className={styles.field}>
           <span className={styles.label}>Pseudo</span>
           <input

@@ -134,3 +134,12 @@
   font-size: 13px;
   color: var(--ink-2);
 }
+.installLink {
+  background: none;
+  border: 0;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 4px;
+}
