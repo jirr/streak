@@ -2,6 +2,9 @@ export type SeriesKind = 'abstinence' | 'habit'
 export type Periodicity = 'daily' | 'weekly' | 'monthly'
 export type TintKey = 'orange' | 'beige' | 'blue' | 'green' | 'purple' | 'yellow'
 export type Gender = 'female' | 'male' | 'other' | 'unspecified'
+export type Locale = 'fr' | 'en'
+/** 'system' = langue du système, résolue à l'exécution. */
+export type LanguagePref = 'system' | Locale
 
 export const TINT_KEYS: TintKey[] = ['orange', 'beige', 'blue', 'green', 'purple', 'yellow']
 
@@ -68,6 +71,8 @@ export interface Settings {
   backupNudgeDismissedAt?: string
   /** défaut false */
   installNudgeDismissed: boolean
+  /** défaut 'system' */
+  language: LanguagePref
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -76,6 +81,7 @@ export const DEFAULT_SETTINGS: Settings = {
   notificationsPrompted: false,
   viewMode: 'grid',
   installNudgeDismissed: false,
+  language: 'system',
 }
 
 export interface Run {

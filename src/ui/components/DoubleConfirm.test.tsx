@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { setLanguage } from '../../test/locale.ts'
 import { DoubleConfirm } from './DoubleConfirm.tsx'
 
 function setup(onConfirm: () => void | Promise<void> = vi.fn()) {
@@ -10,6 +11,8 @@ function setup(onConfirm: () => void | Promise<void> = vi.fn()) {
 }
 
 describe('DoubleConfirm', () => {
+  beforeEach(() => setLanguage('fr'))
+
   it('Oui puis Oui : onConfirm appelé une fois ; le texte de l’étape 2 n’apparaît qu’après le 1er Oui', async () => {
     const { onConfirm, user } = setup()
     expect(screen.getByText("C'est vrai ?")).toBeInTheDocument()
@@ -60,5 +63,15 @@ describe('DoubleConfirm', () => {
     expect(screen.getByRole('button', { name: 'Oui' })).toHaveFocus()
     await user.click(screen.getByRole('button', { name: 'Oui' }))
     expect(screen.getByRole('button', { name: 'Oui' })).toHaveFocus()
+  })
+
+  it('suit la langue choisie (anglais)', async () => {
+    setLanguage('en')
+    const { onConfirm, user } = setup()
+    expect(screen.getByText('Is that true?')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Yes' }))
+    expect(screen.getByText("You're not lying to yourself, are you?")).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Yes' }))
+    expect(onConfirm).toHaveBeenCalledTimes(1)
   })
 })

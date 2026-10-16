@@ -8,8 +8,10 @@ import { scheduler } from '../../notifications/index.ts'
 import type { PermissionState } from '../../notifications/NotificationScheduler.ts'
 import { syncReminders } from '../../notifications/syncReminders.ts'
 import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
-import { parseBackup } from '../../domain/backup.ts'
-import type { BackupV1, Gender } from '../../domain/types.ts'
+import { parseBackup, type ParseBackupResult } from '../../domain/backup.ts'
+import type { BackupV1, Gender, LanguagePref } from '../../domain/types.ts'
+import type { Messages } from '../../i18n/messages.ts'
+import { useI18n } from '../../i18n/useI18n.ts'
 import { Button } from '../components/Button.tsx'
 import { DoubleConfirm } from '../components/DoubleConfirm.tsx'
 import { PageHeader } from '../components/PageHeader.tsx'
@@ -17,32 +19,38 @@ import { Segmented } from '../components/Segmented.tsx'
 import { Toggle } from '../components/Toggle.tsx'
 import styles from './Account.module.css'
 
-const GENDERS: { value: Gender; label: string }[] = [
-  { value: 'female', label: 'Femme' },
-  { value: 'male', label: 'Homme' },
-  { value: 'other', label: 'Autre' },
-  { value: 'unspecified', label: 'Ne pas préciser' },
-]
-
-const PERMISSION_LABELS: Record<PermissionState, string> = {
-  granted: 'Activées',
-  denied: 'Bloquées dans le navigateur',
-  default: 'Pas encore autorisées',
-  unsupported: 'Non supportées ici',
-}
+const GENDER_VALUES: Gender[] = ['female', 'male', 'other', 'unspecified']
 
 const GRACE_OPTIONS = [0, 1, 2, 3, 4, 5, 6]
 
-function lastBackupLabel(iso: string | undefined, now: Date): string {
-  if (!iso) return 'jamais'
+function lastBackupLabel(iso: string | undefined, now: Date, t: Messages): string {
+  if (!iso) return t.account.never
   const days = differenceInCalendarDays(now, new Date(iso))
-  if (days <= 0) return "aujourd'hui"
-  return `il y a ${days} jour${days >= 2 ? 's' : ''}`
+  if (days <= 0) return t.account.today
+  return t.account.daysAgo(days)
+}
+
+function importErrorMessage(result: Extract<ParseBackupResult, { ok: false }>, t: Messages): string {
+  switch (result.error) {
+    case 'not-series':
+      return t.account.importErrors.notSeries
+    case 'unsupported-version':
+      return t.account.importErrors.unsupportedVersion
+    case 'corrupt':
+      return t.account.importErrors.corrupt(result.field ?? '?')
+  }
 }
 
 export function Account() {
   const navigate = useNavigate()
   const now = useNow()
+  const { t } = useI18n()
+  const genders = GENDER_VALUES.map((value) => ({ value, label: t.common.genders[value] }))
+  const languages: { value: LanguagePref; label: string }[] = [
+    { value: 'system', label: t.account.languageSystem },
+    { value: 'fr', label: 'Français' },
+    { value: 'en', label: 'English' },
+  ]
   const { canInstall, promptInstall } = useInstallPrompt()
   const profile = useAppStore((s) => s.profile)
   const settings = useAppStore((s) => s.settings)
@@ -79,7 +87,7 @@ export function Account() {
       if (outcome !== 'cancelled') await updateSettings({ lastBackupAt: now.toISOString() })
     } catch (e) {
       console.error(e)
-      setExportError("L'export a échoué. Réessaie.")
+      setExportError(t.account.exportFailed)
     }
   }
 
@@ -88,17 +96,17 @@ export function Account() {
     setImportError(null)
     const result = parseBackup(await file.text())
     if (result.ok) setPendingImport(result.backup)
-    else setImportError(result.error)
+    else setImportError(importErrorMessage(result, t))
   }
 
   return (
     <main className={styles.page}>
-      <PageHeader title="Mon compte" />
+      <PageHeader title={t.account.title} />
 
       <section className={styles.card}>
-        <h2 className={styles.h2}>Profil</h2>
+        <h2 className={styles.h2}>{t.account.profile}</h2>
         <label className={styles.field}>
-          <span className={styles.label}>Pseudo</span>
+          <span className={styles.label}>{t.onboarding.pseudo}</span>
           <input
             className={styles.input}
             value={pseudo}
@@ -109,10 +117,10 @@ export function Account() {
           />
         </label>
         <div className={styles.field}>
-          <span className={styles.label}>Sexe</span>
+          <span className={styles.label}>{t.onboarding.gender}</span>
           <Segmented
-            label="Sexe"
-            options={GENDERS}
+            label={t.onboarding.gender}
+            options={genders}
             value={profile?.gender}
             allowDeselect
             onChange={(g) => void updateProfile({ gender: g })}
@@ -120,15 +128,22 @@ export function Account() {
         </div>
       </section>
 
+      <section className={styles.card}>
+        <h2 className={styles.h2}>{t.account.language}</h2>
+        <Segmented
+          label={t.account.language}
+          options={languages}
+          value={settings.language}
+          onChange={(language) => language && void updateSettings({ language })}
+        />
+      </section>
+
       <section className={`${styles.card} ${styles.highlight}`}>
-        <h2 className={styles.h2}>Sauvegarde</h2>
-        <p className={styles.strong}>Dernière sauvegarde : {lastBackupLabel(settings.lastBackupAt, now)}</p>
-        <p className={styles.muted}>
-          Tes données vivent uniquement sur cet appareil. Si l'adresse de l'app change ou si tu vides ton navigateur,
-          elles disparaissent.
-        </p>
+        <h2 className={styles.h2}>{t.account.backup}</h2>
+        <p className={styles.strong}>{t.account.lastBackup(lastBackupLabel(settings.lastBackupAt, now, t))}</p>
+        <p className={styles.muted}>{t.account.backupHelp}</p>
         <Button fullWidth onClick={() => void doExport()}>
-          Exporter mes données
+          {t.account.export}
         </Button>
         {exportError ? (
           <p className={styles.error} role="alert">
@@ -136,14 +151,14 @@ export function Account() {
           </p>
         ) : null}
         <Button variant="secondary" fullWidth onClick={() => fileInput.current?.click()}>
-          Importer
+          {t.account.import}
         </Button>
         <input
           ref={fileInput}
           type="file"
           accept="application/json,.json"
           hidden
-          aria-label="Fichier de sauvegarde"
+          aria-label={t.account.importFile}
           onChange={(e) => {
             void onFile(e.target.files?.[0])
             e.target.value = ''
@@ -157,8 +172,8 @@ export function Account() {
       </section>
 
       <section className={styles.card}>
-        <h2 className={styles.h2}>Notifications</h2>
-        <p className={styles.strong}>{PERMISSION_LABELS[permission]}</p>
+        <h2 className={styles.h2}>{t.account.notifications}</h2>
+        <p className={styles.strong}>{t.account.permission[permission]}</p>
         {permission === 'default' ? (
           <Button
             fullWidth
@@ -167,7 +182,7 @@ export function Account() {
               await syncReminders()
             }}
           >
-            Activer les notifications
+            {t.account.enableNotifications}
           </Button>
         ) : null}
         {permission === 'granted' ? (
@@ -177,40 +192,39 @@ export function Account() {
               fullWidth
               onClick={async () => {
                 try {
-                  await scheduler.sendTest()
-                  setTestResult('Notification envoyée. Rien reçu ? Vérifie les réglages du système et du navigateur.')
+                  await scheduler.sendTest({ title: 'Séries', body: t.account.testBody })
+                  setTestResult(t.account.testSent)
                 } catch (e) {
-                  setTestResult(`Impossible d'afficher la notification : ${e instanceof Error ? e.message : e}`)
+                  console.error(e)
+                  setTestResult(t.account.testFailed)
                 }
               }}
             >
-              Tester une notification
+              {t.account.testNotification}
             </Button>
             {testResult ? <p className={styles.muted}>{testResult}</p> : null}
           </>
         ) : null}
         <div className={styles.switchRow}>
-          <span className={styles.label}>Rappels</span>
+          <span className={styles.label}>{t.account.reminders}</span>
           <Toggle
-            label="Rappels"
+            label={t.account.reminders}
             checked={settings.remindersEnabled}
             onChange={(v) => void updateSettings({ remindersEnabled: v })}
           />
         </div>
         {isIos() && !isStandalone() ? (
           <Link to="/install" className={styles.link}>
-            Sur iPhone, installe l'app d'abord
+            {t.account.iosInstallFirst}
           </Link>
         ) : null}
-        <p className={styles.muted}>
-          Les rappels sont best effort : ils arrivent surtout quand l'app est ouverte ou récemment utilisée.
-        </p>
+        <p className={styles.muted}>{t.account.bestEffort}</p>
       </section>
 
       <section className={styles.card}>
-        <h2 className={styles.h2}>Heure de grâce</h2>
+        <h2 className={styles.h2}>{t.account.grace}</h2>
         <label className={styles.field}>
-          <span className={styles.label}>Jusqu'à quelle heure ?</span>
+          <span className={styles.label}>{t.account.graceQuestion}</span>
           <select
             className={styles.input}
             value={settings.graceHour}
@@ -218,42 +232,42 @@ export function Account() {
           >
             {GRACE_OPTIONS.map((h) => (
               <option key={h} value={h}>
-                {h === 0 ? 'Aucune' : `${h} h`}
+                {h === 0 ? t.account.graceNone : t.account.graceOption(h)}
               </option>
             ))}
           </select>
         </label>
-        <p className={styles.muted}>Jusqu'à cette heure, tu peux encore cocher la veille.</p>
+        <p className={styles.muted}>{t.account.graceHelp}</p>
       </section>
 
       <section className={styles.card}>
-        <h2 className={styles.h2}>Application</h2>
+        <h2 className={styles.h2}>{t.account.app}</h2>
         {canInstall ? (
           <Button variant="secondary" fullWidth onClick={() => void promptInstall()}>
-            Installer l'app
+            {t.install.installApp}
           </Button>
         ) : null}
         {isIos() && !isStandalone() ? (
           <Link to="/install" className={styles.link}>
-            Installer sur iPhone
+            {t.install.installIphone}
           </Link>
         ) : null}
-        <p className={styles.muted}>Version {__APP_VERSION__}</p>
+        <p className={styles.muted}>{t.account.version(__APP_VERSION__)}</p>
       </section>
 
       <section className={styles.card}>
-        <h2 className={styles.h2}>Zone dangereuse</h2>
+        <h2 className={styles.h2}>{t.account.danger}</h2>
         <Button variant="danger" fullWidth onClick={() => setConfirmReset(true)}>
-          Tout effacer
+          {t.account.reset}
         </Button>
       </section>
 
       <DoubleConfirm
         open={pendingImport !== null}
-        titles={['Remplacer toutes tes données ?', "Ce qui est sur l'appareil sera écrasé. Sûr ?"]}
+        titles={t.account.importTitles}
         subtitle=""
         finalSubtitle={null}
-        declineMessage="Ok, on ne touche à rien."
+        declineMessage={t.common.nothingTouched}
         onCancel={() => setPendingImport(null)}
         onConfirm={async () => {
           if (pendingImport) await importData(pendingImport)
@@ -263,10 +277,10 @@ export function Account() {
 
       <DoubleConfirm
         open={confirmReset}
-        titles={['Tout effacer ?', 'Séries, records, tout. Vraiment ?']}
+        titles={t.account.resetTitles}
         subtitle=""
         finalSubtitle={null}
-        declineMessage="Ok, on ne touche à rien."
+        declineMessage={t.common.nothingTouched}
         onCancel={() => setConfirmReset(false)}
         onConfirm={async () => {
           await resetAll()

@@ -12,7 +12,8 @@ import {
   getPreset,
   type Preset,
 } from '../../domain/presets.ts'
-import { TINT_KEYS, type Periodicity, type Series, type SeriesKind, type TintKey } from '../../domain/types.ts'
+import { TINT_KEYS, type Locale, type Periodicity, type Series, type SeriesKind, type TintKey } from '../../domain/types.ts'
+import { useI18n } from '../../i18n/useI18n.ts'
 import { Button } from '../components/Button.tsx'
 import { DoubleConfirm } from '../components/DoubleConfirm.tsx'
 import { EmojiPicker } from '../components/EmojiPicker.tsx'
@@ -74,10 +75,10 @@ function fromSeries(s: Series): FormState {
   }
 }
 
-function applyPreset(f: FormState, p: Preset): FormState {
+function applyPreset(f: FormState, p: Preset, locale: Locale): FormState {
   return {
     ...f,
-    title: p.title,
+    title: p.text[locale].title,
     icon: p.icon,
     kind: p.kind,
     color: CATEGORY_TINT[p.category],
@@ -102,21 +103,9 @@ function toDraft(f: FormState): SeriesDraft {
   }
 }
 
-const KINDS = [
-  { value: 'habit', label: 'Habitude' },
-  { value: 'abstinence', label: 'Jours sans' },
-] as const
-
-const CHOICES = [
-  { value: 'daily', label: 'Jour' },
-  { value: 'weekly', label: 'Semaine' },
-  { value: 'custom', label: 'Perso' },
-] as const
-
-const CUSTOM_PERIODS = [
-  { value: 'weekly', label: 'Semaine' },
-  { value: 'monthly', label: 'Mois' },
-] as const
+const KIND_VALUES: SeriesKind[] = ['habit', 'abstinence']
+const CHOICE_VALUES: PeriodChoice[] = ['daily', 'weekly', 'custom']
+const CUSTOM_PERIOD_VALUES: CustomPeriod[] = ['weekly', 'monthly']
 
 export function SeriesForm() {
   const { id } = useParams()
@@ -128,6 +117,7 @@ export function SeriesForm() {
 
 function FormBody({ existing, initialPresetId }: { existing?: Series; initialPresetId: string | null }) {
   const navigate = useNavigate()
+  const { locale, t } = useI18n()
   const createSeries = useAppStore((s) => s.createSeries)
   const updateSeries = useAppStore((s) => s.updateSeries)
   const archiveSeries = useAppStore((s) => s.archiveSeries)
@@ -136,7 +126,7 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
   const [form, setForm] = useState<FormState>(() => {
     if (existing) return fromSeries(existing)
     const preset = initialPresetId ? getPreset(initialPresetId) : undefined
-    return preset ? applyPreset(INITIAL, preset) : INITIAL
+    return preset ? applyPreset(INITIAL, preset, locale) : INITIAL
   })
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
@@ -153,7 +143,7 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
   }, [])
 
   const pickPreset = (p: Preset) => {
-    setForm((f) => applyPreset(f, p))
+    setForm((f) => applyPreset(f, p, locale))
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -167,15 +157,17 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
   }
 
   const icons = QUICK_EMOJIS.includes(form.icon) ? QUICK_EMOJIS : [...QUICK_EMOJIS, form.icon]
-  const unit = form.customPeriod === 'weekly' ? 'semaine' : 'mois'
+  const kinds = KIND_VALUES.map((value) => ({ value, label: t.form.kinds[value] }))
+  const choices = CHOICE_VALUES.map((value) => ({ value, label: t.form.choices[value] }))
+  const customPeriods = CUSTOM_PERIOD_VALUES.map((value) => ({ value, label: t.form.customPeriods[value] }))
 
   return (
     <div className={styles.page}>
-      <PageHeader title={existing ? 'Modifier la série' : 'Nouvelle série'} back="/" />
+      <PageHeader title={existing ? t.form.editTitle : t.form.newTitle} back="/" />
       <form className={styles.form} onSubmit={submit}>
         <section aria-labelledby="sugg">
           <h2 id="sugg" className={styles.eyebrow}>
-            SUGGESTIONS
+            {t.form.suggestions}
           </h2>
           <div className={styles.chips}>
             {FEATURED_PRESETS.map((p) => (
@@ -185,12 +177,12 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
                 className={form.presetId === p.id ? `${styles.chip} ${styles.chipActive}` : styles.chip}
                 onClick={() => pickPreset(p)}
               >
-                {p.chip}
+                {p.text[locale].chip}
               </button>
             ))}
           </div>
           <button type="button" className={styles.link} onClick={() => setCatalogOpen((o) => !o)} aria-expanded={catalogOpen}>
-            {catalogOpen ? 'Masquer le catalogue' : 'Voir tout le catalogue'}
+            {catalogOpen ? t.form.hideCatalog : t.form.showCatalog}
           </button>
           {catalogOpen ? (
             <div className={styles.catalog}>
@@ -212,21 +204,21 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
                         })
                       }
                     >
-                      <span>{CATEGORY_LABELS[cat]}</span>
+                      <span>{CATEGORY_LABELS[cat][locale]}</span>
                       {open ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                     </button>
                     {open
                       ? items.map((p) => (
-                          <button key={p.id} type="button" className={styles.preset} onClick={() => pickPreset(p)}>
-                            <span className={styles.presetTile} style={{ background: `var(--tint-${CATEGORY_TINT[cat]})` }}>
-                              {p.icon}
-                            </span>
-                            <span className={styles.presetText}>
-                              <strong>{p.title}</strong>
-                              <small>{p.tagline}</small>
-                            </span>
-                          </button>
-                        ))
+                        <button key={p.id} type="button" className={styles.preset} onClick={() => pickPreset(p)}>
+                          <span className={styles.presetTile} style={{ background: `var(--tint-${CATEGORY_TINT[cat]})` }}>
+                            {p.icon}
+                          </span>
+                          <span className={styles.presetText}>
+                            <strong>{p.text[locale].title}</strong>
+                            <small>{p.text[locale].tagline}</small>
+                          </span>
+                        </button>
+                      ))
                       : null}
                   </div>
                 )
@@ -236,21 +228,21 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
         </section>
 
         <section className={styles.card}>
-          <h2 className={styles.cardTitle}>Ou invente la tienne</h2>
+          <h2 className={styles.cardTitle}>{t.form.invent}</h2>
 
           <label className={styles.field}>
-            <span className={styles.label}>Titre</span>
+            <span className={styles.label}>{t.form.title}</span>
             <input
               className={styles.input}
               value={form.title}
               maxLength={60}
-              placeholder="Ex. Jours sans grignoter"
+              placeholder={t.form.titlePlaceholder}
               onChange={(e) => patch({ title: e.target.value, presetId: undefined })}
             />
           </label>
 
           <div className={styles.field}>
-            <span className={styles.label}>Icône</span>
+            <span className={styles.label}>{t.form.icon}</span>
             <div className={styles.icons}>
               {icons.map((e) => (
                 <button
@@ -258,20 +250,20 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
                   type="button"
                   className={form.icon === e ? `${styles.icon} ${styles.iconActive}` : styles.icon}
                   onClick={() => patch({ icon: e })}
-                  aria-label={`Icône ${e}`}
+                  aria-label={t.form.iconAria(e)}
                   aria-pressed={form.icon === e}
                 >
                   {e}
                 </button>
               ))}
-              <button type="button" className={`${styles.icon} ${styles.iconAdd}`} onClick={() => setPickerOpen(true)} aria-label="Plus d'icônes">
+              <button type="button" className={`${styles.icon} ${styles.iconAdd}`} onClick={() => setPickerOpen(true)} aria-label={t.form.moreIcons}>
                 <Plus size={22} />
               </button>
             </div>
           </div>
 
           <div className={styles.field}>
-            <span className={styles.label}>Couleur</span>
+            <span className={styles.label}>{t.form.color}</span>
             <div className={styles.colors}>
               {TINT_KEYS.map((k) => (
                 <button
@@ -280,7 +272,7 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
                   className={form.color === k ? `${styles.color} ${styles.colorActive}` : styles.color}
                   style={{ background: `var(--tint-${k})` }}
                   onClick={() => patch({ color: k })}
-                  aria-label={`Couleur ${k}`}
+                  aria-label={t.form.colorAria(k)}
                   aria-pressed={form.color === k}
                 />
               ))}
@@ -289,24 +281,24 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
         </section>
 
         <section className={styles.field}>
-          <span className={styles.label}>Type</span>
-          <Segmented label="Type" options={[...KINDS]} value={form.kind} onChange={(v) => v && patch({ kind: v })} />
+          <span className={styles.label}>{t.form.type}</span>
+          <Segmented label={t.form.type} options={kinds} value={form.kind} onChange={(v) => v && patch({ kind: v })} />
         </section>
 
         <section className={styles.field}>
-          <span className={styles.label}>Périodicité</span>
+          <span className={styles.label}>{t.form.periodicity}</span>
           <Segmented
-            label="Périodicité"
-            options={[...CHOICES]}
+            label={t.form.periodicity}
+            options={choices}
             value={form.choice}
             onChange={(v) => v && patch({ choice: v })}
           />
           {form.choice === 'custom' ? (
             <div className={styles.custom}>
-              <span className={styles.label}>Période</span>
+              <span className={styles.label}>{t.form.period}</span>
               <Segmented
-                label="Période"
-                options={[...CUSTOM_PERIODS]}
+                label={t.form.period}
+                options={customPeriods}
                 value={form.customPeriod}
                 onChange={(v) => v && patch({ customPeriod: v, target: Math.min(form.target, MAX_TARGET[v]) })}
               />
@@ -314,19 +306,19 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
                 <button
                   type="button"
                   className={styles.stepBtn}
-                  aria-label="Moins"
+                  aria-label={t.form.less}
                   disabled={form.target <= 1}
                   onClick={() => patch({ target: form.target - 1 })}
                 >
                   <Minus size={20} />
                 </button>
                 <span aria-live="polite">
-                  Objectif : <strong>{form.target}</strong> jour{form.target >= 2 ? 's' : ''} par {unit}
+                  {t.form.goal} <strong>{form.target}</strong> {t.form.goalUnit(form.target, form.customPeriod)}
                 </span>
                 <button
                   type="button"
                   className={styles.stepBtn}
-                  aria-label="Plus"
+                  aria-label={t.form.more}
                   disabled={form.target >= MAX_TARGET[form.customPeriod]}
                   onClick={() => patch({ target: form.target + 1 })}
                 >
@@ -340,15 +332,15 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
         <section className={`${styles.card} ${styles.reminder}`}>
           <Bell size={22} />
           <div className={styles.reminderText}>
-            <strong>Rappel quotidien</strong>
-            <small>Tous les jours à {form.reminderTime || '21:00'}</small>
+            <strong>{t.form.reminder}</strong>
+            <small>{t.form.reminderSub(form.reminderTime || '21:00')}</small>
           </div>
-          <Toggle label="Rappel quotidien" checked={form.reminderEnabled} onChange={(v) => patch({ reminderEnabled: v })} />
+          <Toggle label={t.form.reminder} checked={form.reminderEnabled} onChange={(v) => patch({ reminderEnabled: v })} />
           {form.reminderEnabled ? (
             <input
               className={`${styles.input} ${styles.time}`}
               type="time"
-              aria-label="Heure du rappel"
+              aria-label={t.form.reminderTime}
               value={form.reminderTime}
               onChange={(e) => patch({ reminderTime: e.target.value })}
             />
@@ -365,17 +357,17 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
                 navigate('/', { replace: true })
               }}
             >
-              Archiver la série
+              {t.form.archive}
             </Button>
             <Button variant="danger" fullWidth onClick={() => setConfirmDelete(true)}>
-              Supprimer la série
+              {t.form.delete}
             </Button>
           </section>
         ) : null}
 
         <div className={styles.sticky}>
           <Button type="submit" fullWidth disabled={!valid || busy}>
-            {existing ? 'Enregistrer' : 'Lancer la série'}
+            {existing ? t.form.save : t.form.launch}
           </Button>
         </div>
       </form>
@@ -392,10 +384,10 @@ function FormBody({ existing, initialPresetId }: { existing?: Series; initialPre
       {existing ? (
         <DoubleConfirm
           open={confirmDelete}
-          titles={[`Supprimer « ${existing.title} » ?`, "Tout l'historique part avec. Sûr ?"]}
+          titles={t.form.deleteTitles(existing.title)}
           subtitle=""
           finalSubtitle={null}
-          declineMessage="Ok, on ne touche à rien."
+          declineMessage={t.common.nothingTouched}
           onCancel={() => setConfirmDelete(false)}
           onConfirm={async () => {
             await deleteSeries(existing.id)

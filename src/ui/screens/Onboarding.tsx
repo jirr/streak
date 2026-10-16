@@ -3,26 +3,25 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useAppStore } from '../../app/store.ts'
 import type { Gender } from '../../domain/types.ts'
+import { useI18n } from '../../i18n/useI18n.ts'
 import { isIos, isStandalone, useInstallPrompt } from '../../pwa/installPrompt.ts'
 import { Banner } from '../components/Banner.tsx'
 import { Button } from '../components/Button.tsx'
 import { Segmented } from '../components/Segmented.tsx'
 import styles from './Onboarding.module.css'
 
-const GENDERS: { value: Gender; label: string }[] = [
-  { value: 'female', label: 'Femme' },
-  { value: 'male', label: 'Homme' },
-  { value: 'other', label: 'Autre' },
-  { value: 'unspecified', label: 'Ne pas préciser' },
-]
+const GENDER_VALUES: Gender[] = ['female', 'male', 'other', 'unspecified']
 
 function Soon() {
-  return <span className={styles.soon}>bientôt</span>
+  const { t } = useI18n()
+  return <span className={styles.soon}>{t.onboarding.soon}</span>
 }
 
 export function Onboarding() {
   const completeOnboarding = useAppStore((s) => s.completeOnboarding)
   const navigate = useNavigate()
+  const { t } = useI18n()
+  const genders = GENDER_VALUES.map((value) => ({ value, label: t.common.genders[value] }))
   const [pseudo, setPseudo] = useState('')
   const [gender, setGender] = useState<Gender | undefined>()
   const [busy, setBusy] = useState(false)
@@ -46,8 +45,8 @@ export function Onboarding() {
         <div className={styles.logo}>
           <Flame size={32} color="#fff" strokeWidth={2.2} />
         </div>
-        <h1 className={styles.title}>Chaque jour compte.</h1>
-        <p className={styles.subtitle}>Crée tes séries, tiens-les, bats ton record.</p>
+        <h1 className={styles.title}>{t.onboarding.title}</h1>
+        <p className={styles.subtitle}>{t.onboarding.subtitle}</p>
       </section>
 
       <form className={styles.sheet} onSubmit={submit}>
@@ -57,27 +56,27 @@ export function Onboarding() {
             action={
               canInstall ? (
                 <button type="button" className={styles.installLink} onClick={() => void promptInstall()}>
-                  Installer l'app
+                  {t.install.installApp}
                 </button>
               ) : (
                 <Link to="/install" className={styles.installLink}>
-                  Installer sur iPhone
+                  {t.install.installIphone}
                 </Link>
               )
             }
             onDismiss={() => setInstallDismissed(true)}
           >
-            Garde Séries sous la main.
+            {t.install.nudge}
           </Banner>
         ) : null}
 
         <label className={styles.field}>
-          <span className={styles.label}>Pseudo</span>
+          <span className={styles.label}>{t.onboarding.pseudo}</span>
           <input
             className={styles.input}
             value={pseudo}
             onChange={(e) => setPseudo(e.target.value)}
-            placeholder="Ton pseudo"
+            placeholder={t.onboarding.pseudoPlaceholder}
             maxLength={30}
             autoComplete="nickname"
             required
@@ -85,35 +84,35 @@ export function Onboarding() {
         </label>
 
         <div className={styles.field}>
-          <span className={styles.label}>Sexe (facultatif)</span>
-          <Segmented label="Sexe" options={GENDERS} value={gender} onChange={setGender} allowDeselect />
+          <span className={styles.label}>{t.onboarding.genderOptional}</span>
+          <Segmented label={t.onboarding.gender} options={genders} value={gender} onChange={setGender} allowDeselect />
         </div>
 
         <Button type="submit" fullWidth disabled={!valid || busy}>
-          Continuer
+          {t.onboarding.continue}
         </Button>
 
         <div className={styles.separator}>
-          <span>bientôt</span>
+          <span>{t.onboarding.soon}</span>
         </div>
 
         <div className={styles.soonGroup}>
           <button type="button" aria-disabled="true" className={`${styles.provider} ${styles.apple}`} tabIndex={-1}>
-            Continuer avec Apple <Soon />
+            {t.onboarding.apple} <Soon />
           </button>
           <button type="button" aria-disabled="true" className={`${styles.provider} ${styles.google}`} tabIndex={-1}>
-            Continuer avec Google <Soon />
+            {t.onboarding.google} <Soon />
           </button>
           <div className={styles.emailRow} aria-disabled="true">
-            <input className={styles.input} placeholder="Ton e-mail" disabled aria-label="E-mail" />
-            <button type="button" className={styles.emailGo} aria-disabled="true" tabIndex={-1} aria-label="Continuer avec l'e-mail">
+            <input className={styles.input} placeholder={t.onboarding.emailPlaceholder} disabled aria-label={t.onboarding.emailPlaceholder} />
+            <button type="button" className={styles.emailGo} aria-disabled="true" tabIndex={-1} aria-label={t.onboarding.emailContinue}>
               <ArrowRight size={20} />
             </button>
             <Soon />
           </div>
         </div>
 
-        <p className={styles.footer}>Tes données restent sur ton appareil.</p>
+        <p className={styles.footer}>{t.onboarding.footer}</p>
       </form>
     </div>
   )

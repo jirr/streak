@@ -12,6 +12,7 @@ import { confirmSubtitle, progressLabel, unitLabel } from '../../domain/labels.t
 import { toDayKey } from '../../domain/periods.ts'
 import { uncheckedToday } from '../../domain/reminders.ts'
 import type { Series } from '../../domain/types.ts'
+import { useI18n } from '../../i18n/useI18n.ts'
 import { AdSlot } from '../components/AdSlot.tsx'
 import { Banner } from '../components/Banner.tsx'
 import { Button } from '../components/Button.tsx'
@@ -33,6 +34,7 @@ interface CelebrationState {
 
 export function Home() {
   const navigate = useNavigate()
+  const { locale, t } = useI18n()
   const pseudo = useAppStore((s) => s.profile?.pseudo)
   const settings = useAppStore((s) => s.settings)
   const series = useAppStore((s) => s.series)
@@ -86,13 +88,13 @@ export function Home() {
     const { series: s, target } = pending
     try {
       const { stats: after, recordBroken } = await checkIn(s.id, target.dayKey)
-      const unit = unitLabel(s.periodicity, after.current)
-      const partial = after.status === 'done' ? null : progressLabel(after, s.periodicity)
+      const unit = unitLabel(s.periodicity, after.current, locale)
+      const partial = after.status === 'done' ? null : progressLabel(after, s.periodicity, locale)
       setCelebration({
         record: recordBroken,
         message: recordBroken
-          ? `Nouveau record : ${after.current} ${unit} !`
-          : (partial ?? `+1 ! ${after.current} ${unit}`),
+          ? t.home.celebrateRecord(after.current, unit)
+          : (partial ?? t.home.celebrate(after.current, unit)),
       })
       setPulseId(recordBroken ? s.id : null)
     } catch (e) {
@@ -118,13 +120,13 @@ export function Home() {
     <main className={styles.page}>
       <header className={styles.header}>
         <div>
-          <p className={styles.greeting}>Salut {pseudo}</p>
-          <h1 className={styles.title}>Mes séries</h1>
+          <p className={styles.greeting}>{t.home.greeting(pseudo ?? '')}</p>
+          <h1 className={styles.title}>{t.home.title}</h1>
         </div>
         {active.length > 0 ? (
           <div className={styles.toggles}>
-            {toggle('grid', LayoutGrid, 'Vue grille')}
-            {toggle('list', List, 'Vue liste')}
+            {toggle('grid', LayoutGrid, t.home.gridView)}
+            {toggle('list', List, t.home.listView)}
           </div>
         ) : null}
       </header>
@@ -132,7 +134,7 @@ export function Home() {
       {showUncheckedBanner ? (
         <div className={styles.nudge}>
           <Banner tone="accent" badge={unchecked.length} onDismiss={() => dismissBanner(today)}>
-            Tu n'as pas encore coché aujourd'hui
+            {t.home.unchecked}
           </Banner>
         </div>
       ) : null}
@@ -144,17 +146,17 @@ export function Home() {
             action={
               canInstall ? (
                 <button type="button" className={styles.bannerLink} onClick={() => void promptInstall()}>
-                  Installer l'app
+                  {t.install.installApp}
                 </button>
               ) : (
                 <Link to="/install" className={styles.bannerLink}>
-                  Installer sur iPhone
+                  {t.install.installIphone}
                 </Link>
               )
             }
             onDismiss={() => void updateSettings({ installNudgeDismissed: true })}
           >
-            Garde Séries sous la main.
+            {t.install.nudge}
           </Banner>
         </div>
       ) : null}
@@ -164,17 +166,17 @@ export function Home() {
           <Banner
             action={
               <Link to="/account" className={styles.bannerLink}>
-                Sauvegarder
+                {t.home.backupAction}
               </Link>
             }
             onDismiss={() => void updateSettings({ backupNudgeDismissedAt: now.toISOString() })}
           >
-            Pense à sauvegarder tes données.
+            {t.home.backupNudge}
           </Banner>
         </div>
       ) : null}
 
-      {active.length === 0 ? <p className={styles.empty}>Lance ta première série.</p> : null}
+      {active.length === 0 ? <p className={styles.empty}>{t.home.empty}</p> : null}
 
       <div className={view === 'grid' ? styles.grid : styles.list}>
         {active.map((s) => {
@@ -201,12 +203,12 @@ export function Home() {
 
       <DoubleConfirm
         open={pending !== null}
-        subtitle={pending ? confirmSubtitle(pending.series, pending.target.isYesterday) : ''}
+        subtitle={pending ? confirmSubtitle(pending.series, pending.target.isYesterday, locale) : ''}
         onConfirm={confirmCheck}
         onCancel={() => setPending(null)}
       />
 
-      <Sheet open={undoTarget !== null} onClose={() => setUndoTarget(null)} title="Annuler la coche ?">
+      <Sheet open={undoTarget !== null} onClose={() => setUndoTarget(null)} title={t.home.undoTitle}>
         <div className={styles.sheetActions}>
           <Button
             fullWidth
@@ -215,10 +217,10 @@ export function Home() {
               setUndoTarget(null)
             }}
           >
-            Oups, je me suis trompé
+            {t.home.undoYes}
           </Button>
           <Button variant="secondary" fullWidth onClick={() => setUndoTarget(null)}>
-            Non, c'est bon
+            {t.home.undoNo}
           </Button>
         </div>
       </Sheet>
@@ -226,10 +228,10 @@ export function Home() {
       <Sheet
         open={promptPending && promptable}
         onClose={() => void clearNotificationPrompt()}
-        title="Je te rappelle de cocher ?"
+        title={t.home.notifTitle}
       >
         <p className={styles.sheetText}>
-          Tous les soirs à {series[0]?.reminder.time ?? '21:00'}, si tu n'as pas encore coché.
+          {t.home.notifText(series[0]?.reminder.time ?? '21:00')}
         </p>
         <div className={styles.sheetActions}>
           {needsIosInstall ? (
@@ -240,7 +242,7 @@ export function Home() {
                 navigate('/install')
               }}
             >
-              Installer d'abord
+              {t.home.installFirst}
             </Button>
           ) : (
             <Button
@@ -251,11 +253,11 @@ export function Home() {
                 await syncReminders()
               }}
             >
-              Oui, rappelle-moi
+              {t.home.notifYes}
             </Button>
           )}
           <Button variant="secondary" fullWidth onClick={() => void clearNotificationPrompt()}>
-            Plus tard
+            {t.home.later}
           </Button>
         </div>
       </Sheet>

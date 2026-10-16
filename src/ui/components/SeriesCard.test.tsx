@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { setLanguage } from '../../test/locale.ts'
 import { nextCheckTarget } from '../../domain/checkins.ts'
 import { computeStats } from '../../domain/streaks.ts'
 import type { Series } from '../../domain/types.ts'
@@ -24,6 +25,8 @@ function renderCard(series: Series, days: string[], view: 'grid' | 'list' = 'gri
 }
 
 describe('SeriesCard', () => {
+  beforeEach(() => setLanguage('fr'))
+
   it('abstinence cochée : « Tenu ✓ »', () => {
     renderCard(makeSeries({ kind: 'abstinence' }), ['2026-10-14', '2026-10-15'])
     expect(screen.getByRole('button', { name: /Tenu ✓/ })).toBeInTheDocument()
@@ -48,5 +51,12 @@ describe('SeriesCard', () => {
   it('weekly en cours : progression « 1/3 cette semaine »', () => {
     renderCard(makeSeries({ periodicity: 'weekly', target: 3 }), ['2026-10-12'])
     expect(screen.getByText('1/3 cette semaine')).toBeInTheDocument()
+  })
+
+  it('en anglais : libellés et progression traduits', () => {
+    setLanguage('en')
+    renderCard(makeSeries({ kind: 'abstinence' }), ['2026-10-14', '2026-10-15'])
+    expect(screen.getByRole('button', { name: /Held ✓/ })).toBeInTheDocument()
+    expect(screen.getByText('days')).toBeInTheDocument()
   })
 })

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { EMOJI_GRID, isSingleEmoji } from '../../domain/emoji.ts'
 import { Sheet } from './Sheet.tsx'
+import { useI18n } from '../../i18n/useI18n.ts'
 import styles from './EmojiPicker.module.css'
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function EmojiPicker({ open, onClose, onPick }: Props) {
+  const { t } = useI18n()
   const [custom, setCustom] = useState('')
   const trimmed = custom.trim()
   const invalid = trimmed.length > 0 && !isSingleEmoji(trimmed)
@@ -20,7 +22,7 @@ export function EmojiPicker({ open, onClose, onPick }: Props) {
   }
 
   return (
-    <Sheet open={open} onClose={onClose} title="Choisis une icône">
+    <Sheet open={open} onClose={onClose} title={t.emoji.title}>
       <div className={styles.grid}>
         {EMOJI_GRID.map((e) => (
           <button key={e} type="button" className={styles.cell} onClick={() => pick(e)} aria-label={e}>
@@ -29,7 +31,7 @@ export function EmojiPicker({ open, onClose, onPick }: Props) {
         ))}
       </div>
       <label className={styles.custom}>
-        <span>Colle n'importe quel emoji</span>
+        <span>{t.emoji.paste}</span>
         <input
           className={styles.input}
           value={custom}
@@ -41,7 +43,7 @@ export function EmojiPicker({ open, onClose, onPick }: Props) {
           aria-invalid={invalid}
           placeholder="🙂"
         />
-        {invalid ? <span className={styles.error}>Un seul emoji, stp.</span> : null}
+        {invalid ? <span className={styles.error}>{t.emoji.invalid}</span> : null}
       </label>
     </Sheet>
   )

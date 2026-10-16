@@ -18,6 +18,7 @@ self.addEventListener('message', (e) => {
 async function checkReminders(): Promise<void> {
   const { unchecked } = await runReminderCheck(createDexieRepositories(db), new Date(), (n) =>
     self.registration.showNotification(n.title, notificationOptions(n, self.registration.scope)),
+    self.navigator.languages?.length ? self.navigator.languages : [self.navigator.language],
   )
   const nav = self.navigator as WorkerNavigator & {
     setAppBadge?: (n?: number) => Promise<void>

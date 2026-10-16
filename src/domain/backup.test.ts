@@ -23,35 +23,42 @@ describe('backup', () => {
 
   const error = (v: unknown) => {
     const r = parseBackup(typeof v === 'string' ? v : JSON.stringify(v))
-    return r.ok ? null : r.error
+    return r.ok ? null : r.field ? `${r.error}:${r.field}` : r.error
   }
 
   it('rejette JSON invalide et mauvais app', () => {
-    expect(error('{pas du json')).toBe("Ce fichier n'est pas une sauvegarde Séries.")
-    expect(error({ ...backup, app: 'autre' })).toBe("Ce fichier n'est pas une sauvegarde Séries.")
-    expect(error([])).toBe("Ce fichier n'est pas une sauvegarde Séries.")
+    expect(error('{pas du json')).toBe('not-series')
+    expect(error({ ...backup, app: 'autre' })).toBe('not-series')
+    expect(error([])).toBe('not-series')
   })
 
   it('rejette schemaVersion 2', () => {
-    expect(error({ ...backup, schemaVersion: 2 })).toBe('Version de sauvegarde non supportée.')
+    expect(error({ ...backup, schemaVersion: 2 })).toBe('unsupported-version')
   })
 
   it('rejette un check-in sans dayKey ou avec dayKey malformé', () => {
     const { dayKey: _unused, ...broken } = backup.checkIns[0]
-    expect(error({ ...backup, checkIns: [broken] })).toMatch(/^Sauvegarde corrompue : checkIns\[0\]\.dayKey/)
-    expect(error({ ...backup, checkIns: [{ ...backup.checkIns[0], dayKey: '15/10/2026' }] })).toMatch(/dayKey invalide/)
+    expect(error({ ...backup, checkIns: [broken] })).toBe('corrupt:checkIns[0].dayKey')
+    expect(error({ ...backup, checkIns: [{ ...backup.checkIns[0], dayKey: '15/10/2026' }] })).toBe('corrupt:checkIns[0].dayKey')
   })
 
-  it('rejette tableaux manquants et séries invalides', () => {
-    expect(error({ ...backup, series: undefined })).toMatch(/series doit être un tableau/)
-    expect(error({ ...backup, checkIns: 'x' })).toMatch(/checkIns doit être un tableau/)
-    expect(error({ ...backup, series: [{ ...series[0], kind: 'zzz' }] })).toMatch(/series\[0\]\.kind invalide/)
-    expect(error({ ...backup, series: [{ ...series[0], reminder: null }] })).toMatch(/reminder invalide/)
-    expect(error({ ...backup, series: [{ ...series[0], target: 0 }] })).toMatch(/target invalide/)
-    expect(error({ ...backup, series: [{ ...series[0], title: 3 }] })).toMatch(/title manquant/)
-    expect(error({ ...backup, series: [null] })).toMatch(/series\[0\] invalide/)
-    expect(error({ ...backup, profile: 'x' })).toMatch(/profile invalide/)
-    expect(error({ ...backup, settings: 'x' })).toMatch(/settings invalide/)
+  it('rejette tableaux manquants et séries invalides, en nommant le champ fautif', () => {
+    expect(error({ ...backup, series: undefined })).toBe('corrupt:series')
+    expect(error({ ...backup, checkIns: 'x' })).toBe('corrupt:checkIns')
+    expect(error({ ...backup, series: [{ ...series[0], kind: 'zzz' }] })).toBe('corrupt:series[0].kind')
+    expect(error({ ...backup, series: [{ ...series[0], reminder: null }] })).toBe('corrupt:series[0].reminder')
+    expect(error({ ...backup, series: [{ ...series[0], target: 0 }] })).toBe('corrupt:series[0].target')
+    expect(error({ ...backup, series: [{ ...series[0], title: 3 }] })).toBe('corrupt:series[0].title')
+    expect(error({ ...backup, series: [null] })).toBe('corrupt:series[0]')
+    expect(error({ ...backup, profile: 'x' })).toBe('corrupt:profile')
+    expect(error({ ...backup, settings: 'x' })).toBe('corrupt:settings')
+  })
+
+  it('langue : conservée si valide, sinon défaut système', () => {
+    const withLang = (language: unknown) =>
+      parseBackup(JSON.stringify({ ...backup, settings: { ...backup.settings, language } }))
+    expect(withLang('en')).toMatchObject({ ok: true, backup: { settings: { language: 'en' } } })
+    expect(withLang('de')).toMatchObject({ ok: true, backup: { settings: { language: 'system' } } })
   })
 })
 

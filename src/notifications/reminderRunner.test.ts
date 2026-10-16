@@ -15,19 +15,19 @@ beforeEach(async () => {
 describe('runReminderCheck', () => {
   it('notifie une fois par jour et journalise', async () => {
     const show = vi.fn(async () => {})
-    expect(await runReminderCheck(repos, evening, show)).toEqual({ shown: 1, unchecked: 1 })
+    expect(await runReminderCheck(repos, evening, show, ['fr-FR'])).toEqual({ shown: 1, unchecked: 1 })
     expect(show).toHaveBeenCalledTimes(1)
     expect(show).toHaveBeenCalledWith(expect.objectContaining({ tag: 'series-reminder', body: expect.stringContaining('Sans alcool') }))
     expect(await repos.reminderLog.get()).toEqual({ s1: '2026-10-15' })
 
-    expect(await runReminderCheck(repos, at(2026, 10, 15, 22), show)).toEqual({ shown: 0, unchecked: 1 })
+    expect(await runReminderCheck(repos, at(2026, 10, 15, 22), show, ['fr-FR'])).toEqual({ shown: 0, unchecked: 1 })
     expect(show).toHaveBeenCalledTimes(1)
   })
 
   it('ne notifie pas une série déjà cochée ; badge à 0', async () => {
     for (const c of checks('s1', ['2026-10-15'])) await repos.checkIns.add(c)
     const show = vi.fn(async () => {})
-    expect(await runReminderCheck(repos, evening, show)).toEqual({ shown: 0, unchecked: 0 })
+    expect(await runReminderCheck(repos, evening, show, ['fr-FR'])).toEqual({ shown: 0, unchecked: 0 })
     expect(show).not.toHaveBeenCalled()
   })
 
@@ -35,8 +35,20 @@ describe('runReminderCheck', () => {
     const show = vi.fn(async () => {
       throw new Error('boom')
     })
-    await expect(runReminderCheck(repos, evening, show)).rejects.toThrow('boom')
+    await expect(runReminderCheck(repos, evening, show, ['fr-FR'])).rejects.toThrow('boom')
     expect(await repos.reminderLog.get()).toEqual({})
+  })
+
+  it('langue : réglage explicite prioritaire, sinon langue système', async () => {
+    const show = vi.fn(async () => {})
+    await runReminderCheck(repos, evening, show, ['en-US'])
+    expect(show).toHaveBeenLastCalledWith(expect.objectContaining({ title: "You haven't checked in yet today" }))
+
+    await repos.backup.clearAll()
+    await repos.series.put(makeSeries({ id: 's1' }))
+    await repos.settings.save({ ...(await repos.settings.get()), language: 'fr' })
+    await runReminderCheck(repos, evening, show, ['en-US'])
+    expect(show).toHaveBeenLastCalledWith(expect.objectContaining({ title: "Tu n'as pas encore coché aujourd'hui" }))
   })
 })
 

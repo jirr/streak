@@ -19,6 +19,6 @@ export interface NotificationScheduler {
   /** Met à jour le badge et (re)programme les rappels. */
   sync(snapshot: ReminderSnapshot): Promise<void>
   /** Affiche tout de suite une notification de test ; lève une erreur si impossible. */
-  sendTest(): Promise<void>
+  sendTest(content: { title: string; body: string }): Promise<void>
   dispose(): void
 }

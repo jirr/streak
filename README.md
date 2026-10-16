@@ -1,6 +1,6 @@
 # Séries — chaque jour compte
 
-PWA de suivi de séries (streaks) : habitudes et « jours sans », double confirmation à chaque coche, records, Hall of fame, sauvegarde JSON. 100 % locale (IndexedDB), aucune donnée ne quitte l'appareil. Interface en français.
+PWA de suivi de séries (streaks) : habitudes et « jours sans », double confirmation à chaque coche, records, Hall of fame, sauvegarde JSON. 100 % locale (IndexedDB), aucune donnée ne quitte l'appareil. Interface en français et en anglais.
 
 En ligne : <https://jirr.github.io/streak/>
 
@@ -32,12 +32,17 @@ src/data/            Contrat `Repositories` + implémentation Dexie (utilisable 
 src/notifications/   `NotificationScheduler` (interface) + implémentation web best effort.
 src/pwa/             Invite d'installation, bandeau de mise à jour.
 src/app/             Store Zustand, routeur (hash), horloge réactive.
+src/i18n/            Catalogues de textes UI fr/en (`messages.ts`) et hook `useI18n`.
 src/ui/              Écrans, composants, tokens CSS (CSS Modules).
 src/sw.ts            Service worker : precache, mise à jour, rappels (periodicsync), clic sur notification.
 fixtures/            `demo-backup.json` : sauvegarde de démo importable depuis « Mon compte ».
 ```
 
 Règles de calcul : la source de vérité est le `dayKey` local (`yyyy-MM-dd`) de chaque coche ; semaines ISO (lundi) ; une coche par jour ; un objectif « N jours par semaine/mois » valide la période à N coches ; heure de grâce (4 h par défaut) pendant laquelle on peut encore cocher la veille.
+
+## Langues
+
+Français et anglais. Par défaut, la langue suit celle du système (`navigator.languages`, repli sur l'anglais si ni fr ni en) ; elle se change dans Mon compte → Langue (Système / Français / English), réglage sauvegardé avec les autres. Les textes de l'UI sont dans `src/i18n/messages.ts` (le type `Messages` oblige l'anglais à couvrir toutes les clés) ; les libellés métier (unités, notifications, presets) sont dans `src/domain/` et prennent la langue en paramètre. Les titres des séries déjà créées ne sont pas traduits (ce sont des données utilisateur).
 
 ## Renommer le repo
 

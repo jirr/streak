@@ -1,9 +1,11 @@
 import { useRegisterSW } from 'virtual:pwa-register/react'
+import { useI18n } from '../i18n/useI18n.ts'
 import styles from './UpdateBanner.module.css'
 
 const HOUR_MS = 60 * 60 * 1000
 
 export function UpdateBanner() {
+  const { t } = useI18n()
   const {
     needRefresh: [needRefresh],
     updateServiceWorker,
@@ -16,9 +18,9 @@ export function UpdateBanner() {
   if (!needRefresh) return null
   return (
     <div className={styles.banner} role="status">
-      <span>Nouvelle version disponible</span>
+      <span>{t.update.available}</span>
       <button type="button" className={styles.button} onClick={() => void updateServiceWorker(true)}>
-        Recharger
+        {t.update.reload}
       </button>
     </div>
   )

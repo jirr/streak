@@ -1,6 +1,7 @@
 import { ChevronLeft } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router'
+import { useI18n } from '../../i18n/useI18n.ts'
 import styles from './PageHeader.module.css'
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 export function PageHeader({ title, back, icon }: Props) {
   const navigate = useNavigate()
+  const { t } = useI18n()
   const goBack = () => {
     if (typeof back === 'string') navigate(back)
     else if (window.history.length > 1) navigate(-1)
@@ -20,7 +22,7 @@ export function PageHeader({ title, back, icon }: Props) {
   return (
     <header className={styles.header}>
       {back ? (
-        <button type="button" className={styles.back} onClick={goBack} aria-label="Retour">
+        <button type="button" className={styles.back} onClick={goBack} aria-label={t.common.back}>
           <ChevronLeft size={24} />
         </button>
       ) : null}

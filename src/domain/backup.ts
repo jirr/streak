@@ -12,7 +12,11 @@ import {
   type TintKey,
 } from './types.ts'
 
-export type ParseBackupResult = { ok: true; backup: BackupV1 } | { ok: false; error: string }
+export type BackupErrorCode = 'not-series' | 'unsupported-version' | 'corrupt'
+
+export type ParseBackupResult =
+  | { ok: true; backup: BackupV1 }
+  | { ok: false; error: BackupErrorCode; /** chemin du champ fautif (error = 'corrupt') */ field?: string }
 
 export function buildBackup(
   data: Pick<BackupV1, 'profile' | 'settings' | 'series' | 'checkIns'>,
@@ -31,8 +35,9 @@ export function buildBackup(
 
 class BackupError extends Error {}
 
-function fail(detail: string): never {
-  throw new BackupError(detail)
+/** `field` : chemin du champ invalide, ex. `checkIns[0].dayKey`. */
+function fail(field: string): never {
+  throw new BackupError(field)
 }
 
 type Obj = Record<string, unknown>
@@ -43,20 +48,20 @@ function isObj(v: unknown): v is Obj {
 
 function str(o: Obj, key: string, where: string): string {
   const v = o[key]
-  if (typeof v !== 'string') fail(`${where}.${key} manquant ou invalide`)
+  if (typeof v !== 'string') fail(`${where}.${key}`)
   return v
 }
 
 function optStr(o: Obj, key: string, where: string): string | undefined {
   const v = o[key]
   if (v === undefined) return undefined
-  if (typeof v !== 'string') fail(`${where}.${key} invalide`)
+  if (typeof v !== 'string') fail(`${where}.${key}`)
   return v
 }
 
 function oneOf<T extends string>(o: Obj, key: string, allowed: readonly T[], where: string): T {
   const v = o[key]
-  if (typeof v !== 'string' || !allowed.includes(v as T)) fail(`${where}.${key} invalide`)
+  if (typeof v !== 'string' || !allowed.includes(v as T)) fail(`${where}.${key}`)
   return v as T
 }
 
@@ -67,10 +72,10 @@ const DAY_KEY = /^\d{4}-\d{2}-\d{2}$/
 
 function parseSeries(raw: unknown, i: number): Series {
   const where = `series[${i}]`
-  if (!isObj(raw)) fail(`${where} invalide`)
+  if (!isObj(raw)) fail(where)
   const reminder = raw.reminder
   if (!isObj(reminder) || typeof reminder.enabled !== 'boolean' || typeof reminder.time !== 'string') {
-    fail(`${where}.reminder invalide`)
+    fail(`${where}.reminder`)
   }
   const series: Series = {
     id: str(raw, 'id', where),
@@ -85,7 +90,7 @@ function parseSeries(raw: unknown, i: number): Series {
   if (raw.color !== undefined) series.color = oneOf<TintKey>(raw, 'color', TINT_KEYS, where)
   if (raw.target !== undefined) {
     if (typeof raw.target !== 'number' || !Number.isInteger(raw.target) || raw.target < 1) {
-      fail(`${where}.target invalide`)
+      fail(`${where}.target`)
     }
     series.target = raw.target
   }
@@ -98,9 +103,9 @@ function parseSeries(raw: unknown, i: number): Series {
 
 function parseCheckIn(raw: unknown, i: number): CheckIn {
   const where = `checkIns[${i}]`
-  if (!isObj(raw)) fail(`${where} invalide`)
+  if (!isObj(raw)) fail(where)
   const dayKey = str(raw, 'dayKey', where)
-  if (!DAY_KEY.test(dayKey)) fail(`${where}.dayKey invalide`)
+  if (!DAY_KEY.test(dayKey)) fail(`${where}.dayKey`)
   return {
     id: str(raw, 'id', where),
     seriesId: str(raw, 'seriesId', where),
@@ -112,7 +117,7 @@ function parseCheckIn(raw: unknown, i: number): CheckIn {
 
 function parseProfile(raw: unknown): Profile | null {
   if (raw === null || raw === undefined) return null
-  if (!isObj(raw)) fail('profile invalide')
+  if (!isObj(raw)) fail('profile')
   const profile: Profile = {
     id: str(raw, 'id', 'profile'),
     pseudo: str(raw, 'pseudo', 'profile'),
@@ -126,7 +131,7 @@ function parseProfile(raw: unknown): Profile | null {
 function parseSettings(raw: unknown): Settings {
   const settings: Settings = { ...DEFAULT_SETTINGS }
   if (raw === undefined || raw === null) return settings
-  if (!isObj(raw)) fail('settings invalide')
+  if (!isObj(raw)) fail('settings')
   if (typeof raw.graceHour === 'number' && raw.graceHour >= 0 && raw.graceHour <= 6) {
     settings.graceHour = Math.floor(raw.graceHour)
   }
@@ -136,6 +141,7 @@ function parseSettings(raw: unknown): Settings {
   if (typeof raw.installNudgeDismissed === 'boolean') settings.installNudgeDismissed = raw.installNudgeDismissed
   if (typeof raw.lastBackupAt === 'string') settings.lastBackupAt = raw.lastBackupAt
   if (typeof raw.backupNudgeDismissedAt === 'string') settings.backupNudgeDismissedAt = raw.backupNudgeDismissedAt
+  if (raw.language === 'system' || raw.language === 'fr' || raw.language === 'en') settings.language = raw.language
   return settings
 }
 
@@ -144,15 +150,15 @@ export function parseBackup(text: string): ParseBackupResult {
   try {
     json = JSON.parse(text)
   } catch {
-    return { ok: false, error: "Ce fichier n'est pas une sauvegarde Séries." }
+    return { ok: false, error: 'not-series' }
   }
   if (!isObj(json) || json.app !== 'series') {
-    return { ok: false, error: "Ce fichier n'est pas une sauvegarde Séries." }
+    return { ok: false, error: 'not-series' }
   }
-  if (json.schemaVersion !== 1) return { ok: false, error: 'Version de sauvegarde non supportée.' }
+  if (json.schemaVersion !== 1) return { ok: false, error: 'unsupported-version' }
   try {
-    if (!Array.isArray(json.series)) fail('series doit être un tableau')
-    if (!Array.isArray(json.checkIns)) fail('checkIns doit être un tableau')
+    if (!Array.isArray(json.series)) fail('series')
+    if (!Array.isArray(json.checkIns)) fail('checkIns')
     const series = json.series.map(parseSeries)
     const checkIns = json.checkIns.map(parseCheckIn)
     return {
@@ -168,7 +174,7 @@ export function parseBackup(text: string): ParseBackupResult {
       },
     }
   } catch (e) {
-    if (e instanceof BackupError) return { ok: false, error: `Sauvegarde corrompue : ${e.message}.` }
+    if (e instanceof BackupError) return { ok: false, error: 'corrupt', field: e.message }
     throw e
   }
 }

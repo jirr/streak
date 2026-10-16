@@ -1,4 +1,5 @@
 import { computeStats } from '../domain/streaks.ts'
+import { resolveLocale } from '../domain/locale.ts'
 import { toDayKey } from '../domain/periods.ts'
 import { buildReminderNotification, dueReminders, uncheckedToday, type ReminderNotification } from '../domain/reminders.ts'
 import type { Repositories } from '../data/repositories.ts'
@@ -10,11 +11,15 @@ export interface ReminderRunResult {
   unchecked: number
 }
 
-/** Logique partagée page / service worker : relit les données, notifie les rappels dus, journalise. */
+/**
+ * Logique partagée page / service worker : relit les données, notifie les rappels dus, journalise.
+ * `systemLanguages` : `navigator.languages` du contexte appelant (langue « système »).
+ */
 export async function runReminderCheck(
   repos: Repositories,
   now: Date,
   show: (n: ReminderNotification) => Promise<void>,
+  systemLanguages: readonly string[],
 ): Promise<ReminderRunResult> {
   const [series, checkIns, settings, log] = await Promise.all([
     repos.series.list(),
@@ -25,7 +30,7 @@ export async function runReminderCheck(
   const due = dueReminders(series, checkIns, now, settings.graceHour, log, settings.remindersEnabled)
   if (due.length > 0) {
     const stats = new Map(due.map((s) => [s.id, computeStats(s, checkIns, now, settings.graceHour)]))
-    await show(buildReminderNotification(due, stats))
+    await show(buildReminderNotification(due, stats, resolveLocale(settings.language, systemLanguages)))
     await repos.reminderLog.markSent(
       due.map((s) => s.id),
       toDayKey(now),

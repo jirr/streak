@@ -1,4 +1,5 @@
 import { repos } from '../data/index.ts'
+import { systemLanguages } from '../i18n/useI18n.ts'
 import { nextReminderAt, uncheckedToday } from '../domain/reminders.ts'
 import type { NotificationScheduler, PermissionState, ReminderSnapshot } from './NotificationScheduler.ts'
 import { notificationOptions, runReminderCheck } from './reminderRunner.ts'
@@ -57,10 +58,10 @@ export class WebNotificationScheduler implements NotificationScheduler {
     clearTimeout(this.timer)
   }
 
-  async sendTest(): Promise<void> {
-    if (this.getPermission() !== 'granted') throw new Error('Notifications non autorisées')
+  async sendTest(content: { title: string; body: string }): Promise<void> {
+    if (this.getPermission() !== 'granted') throw new Error('Notification permission not granted')
     const registration = await navigator.serviceWorker?.getRegistration()
-    const n = { title: 'Séries', body: 'Test : les notifications fonctionnent.', tag: 'series-test' }
+    const n = { ...content, tag: 'series-test' }
     if (registration) await registration.showNotification(n.title, notificationOptions(n, registration.scope))
     else new Notification(n.title, { body: n.body, tag: n.tag })
   }
@@ -74,7 +75,7 @@ export class WebNotificationScheduler implements NotificationScheduler {
       await runReminderCheck(repos, new Date(), async (n) => {
         if (registration) await registration.showNotification(n.title, notificationOptions(n, registration.scope))
         else new Notification(n.title, { body: n.body, tag: n.tag })
-      })
+      }, systemLanguages())
     } catch (e) {
       console.warn('Rappel non affiché', e)
     } finally {

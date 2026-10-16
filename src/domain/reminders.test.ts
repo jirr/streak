@@ -60,17 +60,27 @@ describe('buildReminderNotification', () => {
   it('1 série : titre, corps avec compteur', () => {
     const data = checks('s1', ['2026-10-13', '2026-10-14'])
     const stats = new Map([['s1', computeStats(s, data, evening, 4)]])
-    expect(buildReminderNotification([s], stats)).toEqual({
+    expect(buildReminderNotification([s], stats, 'fr')).toEqual({
       title: "Tu n'as pas encore coché aujourd'hui",
       body: "« Sans alcool » t'attend. 2 jours, ne lâche rien.",
       tag: 'series-reminder',
     })
   })
   it('plusieurs séries : message groupé', () => {
-    const n = buildReminderNotification([s, makeSeries({ id: 's2' })], new Map())
+    const n = buildReminderNotification([s, makeSeries({ id: 's2' })], new Map(), 'fr')
     expect(n.body).toBe('2 séries t\'attendent. Deux “oui” et c\'est réglé.')
   })
   it('stats absentes : 0 jour', () => {
-    expect(buildReminderNotification([s], new Map()).body).toContain('0 jour,')
+    expect(buildReminderNotification([s], new Map(), 'fr').body).toContain('0 jour,')
+  })
+  it('anglais : titre et corps', () => {
+    const data = checks('s1', ['2026-10-14'])
+    const stats = new Map([['s1', computeStats(s, data, evening, 4)]])
+    expect(buildReminderNotification([s], stats, 'en')).toEqual({
+      title: "You haven't checked in yet today",
+      body: '“Sans alcool” is waiting. 1 day, don\'t let go.',
+      tag: 'series-reminder',
+    })
+    expect(buildReminderNotification([s, s], stats, 'en').body).toBe('2 streaks are waiting. Two “yes” and you\'re done.')
   })
 })

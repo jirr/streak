@@ -1,21 +1,23 @@
 import { Crown, Plus, UserRound } from 'lucide-react'
 import { NavLink } from 'react-router'
+import { useI18n } from '../../i18n/useI18n.ts'
 import styles from './BottomNav.module.css'
 
 export function BottomNav() {
+  const { t } = useI18n()
   const tab = ({ isActive }: { isActive: boolean }) => (isActive ? `${styles.tab} ${styles.active}` : styles.tab)
   return (
-    <nav className={styles.nav} aria-label="Navigation principale">
+    <nav className={styles.nav} aria-label={t.nav.label}>
       <NavLink to="/hall-of-fame" className={tab}>
         <Crown size={24} />
-        <span>Hall of fame</span>
+        <span>{t.nav.hallOfFame}</span>
       </NavLink>
-      <NavLink to="/series/new" className={styles.add} aria-label="Nouvelle série">
+      <NavLink to="/series/new" className={styles.add} aria-label={t.nav.newSeries}>
         <Plus size={30} color="#fff" strokeWidth={2.5} />
       </NavLink>
       <NavLink to="/account" className={tab}>
         <UserRound size={24} />
-        <span>Mon compte</span>
+        <span>{t.nav.account}</span>
       </NavLink>
     </nav>
   )

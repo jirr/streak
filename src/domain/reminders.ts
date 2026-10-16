@@ -2,7 +2,7 @@ import { addDays } from 'date-fns'
 import { nextCheckTarget } from './checkins.ts'
 import { unitLabel } from './labels.ts'
 import { toDayKey } from './periods.ts'
-import type { CheckIn, ReminderLog, Series, SeriesStats } from './types.ts'
+import type { CheckIn, Locale, ReminderLog, Series, SeriesStats } from './types.ts'
 
 /** Séries actives dont il reste quelque chose à cocher (bandeau, badge, titre). */
 export function uncheckedToday(
@@ -61,20 +61,23 @@ export interface ReminderNotification {
 export function buildReminderNotification(
   due: Series[],
   statsById: ReadonlyMap<string, SeriesStats>,
+  locale: Locale,
 ): ReminderNotification {
-  const title = "Tu n'as pas encore coché aujourd'hui"
+  const tag = 'series-reminder'
+  const title = locale === 'fr' ? "Tu n'as pas encore coché aujourd'hui" : "You haven't checked in yet today"
   if (due.length === 1) {
     const s = due[0]
     const current = statsById.get(s.id)?.current ?? 0
-    return {
-      title,
-      body: `« ${s.title} » t'attend. ${current} ${unitLabel(s.periodicity, current)}, ne lâche rien.`,
-      tag: 'series-reminder',
-    }
+    const unit = unitLabel(s.periodicity, current, locale)
+    const body =
+      locale === 'fr'
+        ? `« ${s.title} » t'attend. ${current} ${unit}, ne lâche rien.`
+        : `“${s.title}” is waiting. ${current} ${unit}, don't let go.`
+    return { title, body, tag }
   }
-  return {
-    title,
-    body: `${due.length} séries t'attendent. Deux “oui” et c'est réglé.`,
-    tag: 'series-reminder',
-  }
+  const body =
+    locale === 'fr'
+      ? `${due.length} séries t'attendent. Deux “oui” et c'est réglé.`
+      : `${due.length} streaks are waiting. Two “yes” and you're done.`
+  return { title, body, tag }
 }
